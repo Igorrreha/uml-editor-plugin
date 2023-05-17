@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds2c3mamxlkfx"]
+
+[ext_resource type="Script" path="res://addons/uml/ui/uml_graph.gd" id="1_tqh31"]
+[ext_resource type="Script" path="res://addons/uml/ui/uml_editor_popup_menu.gd" id="2_rhx0g"]
+[ext_resource type="Script" path="res://addons/uml/ui/nodes_creator.gd" id="3_xjh8h"]
+[ext_resource type="PackedScene" uid="uid://ckye61wfme40m" path="res://addons/uml/ui/node/class_node.tscn" id="4_od6ke"]
+
+[node name="UmlEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GraphEdit" type="GraphEdit" parent="." node_paths=PackedStringArray("_popup_menu")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scroll_offset = Vector2(-40, -40)
+use_snap = false
+script = ExtResource("1_tqh31")
+_popup_menu = NodePath("../PopupMenu")
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+item_count = 1
+item_0/text = "Create class"
+item_0/id = 0
+script = ExtResource("2_rhx0g")
+
+[node name="NodesCreator" type="Node" parent="." node_paths=PackedStringArray("_container")]
+script = ExtResource("3_xjh8h")
+_tscn_class_node = ExtResource("4_od6ke")
+_container = NodePath("../GraphEdit")
+
+[connection signal="popup_request" from="GraphEdit" to="GraphEdit" method="_on_popup_request"]
+[connection signal="class_node_creation_requested" from="PopupMenu" to="NodesCreator" method="create_class_node"]
+[connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
