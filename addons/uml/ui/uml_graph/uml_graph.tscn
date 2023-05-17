@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ds2c3mamxlkfx"]
+[gd_scene load_steps=6 format=3 uid="uid://ceaqb8ru48l4k"]
 
-[ext_resource type="Script" path="res://addons/uml/ui/uml_graph.gd" id="1_tqh31"]
-[ext_resource type="Script" path="res://addons/uml/ui/uml_editor_popup_menu.gd" id="2_rhx0g"]
-[ext_resource type="Script" path="res://addons/uml/ui/nodes_creator.gd" id="3_xjh8h"]
-[ext_resource type="PackedScene" uid="uid://ckye61wfme40m" path="res://addons/uml/ui/node/class_node.tscn" id="4_od6ke"]
+[ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_graph.gd" id="1_xfq3s"]
+[ext_resource type="Script" path="res://addons/uml/ui/uml_graph/connections_drawer.gd" id="2_gunas"]
+[ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_editor_popup_menu.gd" id="2_sk26r"]
+[ext_resource type="Script" path="res://addons/uml/ui/nodes_creator.gd" id="3_wxkrg"]
+[ext_resource type="PackedScene" uid="uid://ckye61wfme40m" path="res://addons/uml/ui/node/class_node.tscn" id="4_7bm0n"]
 
 [node name="UmlEditor" type="Control"]
 layout_mode = 3
@@ -20,22 +21,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_offset = Vector2(-40, -40)
 use_snap = false
-script = ExtResource("1_tqh31")
+script = ExtResource("1_xfq3s")
 _popup_menu = NodePath("../PopupMenu")
+
+[node name="ConnectionsDrawer" type="Node" parent="GraphEdit" node_paths=PackedStringArray("_graph")]
+script = ExtResource("2_gunas")
+_graph = NodePath("..")
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
 item_count = 1
 item_0/text = "Create class"
 item_0/id = 0
-script = ExtResource("2_rhx0g")
+script = ExtResource("2_sk26r")
 
 [node name="NodesCreator" type="Node" parent="." node_paths=PackedStringArray("_container")]
-script = ExtResource("3_xjh8h")
-_tscn_class_node = ExtResource("4_od6ke")
+script = ExtResource("3_wxkrg")
+_tscn_class_node = ExtResource("4_7bm0n")
 _container = NodePath("../GraphEdit")
 
+[connection signal="draw" from="GraphEdit" to="GraphEdit/ConnectionsDrawer" method="on_graph_draw"]
 [connection signal="popup_request" from="GraphEdit" to="GraphEdit" method="_on_popup_request"]
 [connection signal="class_node_creation_requested" from="PopupMenu" to="NodesCreator" method="create_class_node"]
 [connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
