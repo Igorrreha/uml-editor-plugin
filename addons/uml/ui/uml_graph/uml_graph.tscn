@@ -29,9 +29,12 @@ _popup_menu = NodePath("../PopupMenu")
 script = ExtResource("2_gunas")
 _graph = NodePath("..")
 _line_width = 3.0
+_line_dash = 6.0
 _line_color = Color(0.862745, 0.376471, 0, 1)
-_heading_angle_degrees = 30.0
-_heading_length = 25.0
+_arrow_angle_degrees = 60.0
+_arrow_length = 20.0
+_diamond_angle_degrees = 60.0
+_diamond_length = 30.0
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
 item_count = 1

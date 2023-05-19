@@ -5,21 +5,29 @@ extends Node
 
 @export_group("Line")
 @export var _line_width: float
+@export var _line_dash: float
 @export var _line_color: Color
 
-@export_group("Heading")
-@export_range(0, 360, 1) var _heading_angle_degrees: float
-@export var _heading_length: float
+@export_group("Arrow")
+@export_range(0, 360, 1) var _arrow_angle_degrees: float
+@export var _arrow_length: float
+
+@export_group("Diamond")
+@export_range(0, 360, 1) var _diamond_angle_degrees: float
+@export var _diamond_length: float
 
 
 func on_graph_draw() -> void:
 	var connections = _graph.get_connections()
+	var zoom = _graph.zoom
+	var line_width = _line_width * zoom
+	var line_dash = _line_dash * zoom
 	
 	for connection in connections:
 		var node_a = connection.node_a as UmlNode
 		var node_b = connection.node_b as UmlNode
-		var point_a = node_a.position + node_a.size / 2
-		var point_b = node_b.position + node_b.size / 2
+		var point_a = node_a.position + node_a.size / 2 * zoom
+		var point_b = node_b.position + node_b.size / 2 * zoom
 		
 		var delta = point_b - point_a
 		var delta_angle = delta.angle()
@@ -29,23 +37,23 @@ func on_graph_draw() -> void:
 		
 		match connection.type:
 			UmlGraph.ConnectionType.ASSOCIATION:
-				_graph.draw_line(point_a, point_b, _line_color, _line_width)
+				_graph.draw_line(point_a, point_b, _line_color, line_width)
 			
 			UmlGraph.ConnectionType.DIRECTED_ASSOCIATION:
-				_graph.draw_line(point_a, point_b, _line_color, _line_width)
-				_draw_arrow_heading(point_b, delta_angle, true, true)
+				_graph.draw_line(point_a, point_b, _line_color, line_width)
+				_draw_arrow_heading(point_b, delta_angle, zoom, true, true)
 			
 			UmlGraph.ConnectionType.COMPOSITION:
-				_graph.draw_line(point_a, point_b, _line_color, _line_width)
-				_draw_diamond_heading(point_b, delta_angle, true)
+				_graph.draw_line(point_a, point_b, _line_color, line_width)
+				_draw_diamond_heading(point_b, delta_angle, zoom, true)
 			
 			UmlGraph.ConnectionType.INHERITANCE:
-				_graph.draw_line(point_a, point_b, _line_color, _line_width)
-				_draw_arrow_heading(point_b, delta_angle, true, false)
+				_graph.draw_line(point_a, point_b, _line_color, line_width)
+				_draw_arrow_heading(point_b, delta_angle, zoom, true, false)
 			
 			UmlGraph.ConnectionType.REALIZATION:
-				_graph.draw_dashed_line(point_a, point_b, _line_color, _line_width, 10)
-				_draw_arrow_heading(point_b, delta_angle, true, false)
+				_graph.draw_dashed_line(point_a, point_b, _line_color, line_width, line_dash)
+				_draw_arrow_heading(point_b, delta_angle, zoom, true, false)
 
 
 func _get_point_on_rect(rect: Rect2, angle: float) -> Vector2:
@@ -68,27 +76,39 @@ func _get_point_on_rect(rect: Rect2, angle: float) -> Vector2:
 	return Vector2.ZERO
 
 
-func _draw_arrow_heading(target: Vector2, angle: float, closed: bool = false,
-		filled: bool = false) -> void:
+func _draw_arrow_heading(target: Vector2, angle: float, zoom: float,
+		closed: bool = false, filled: bool = false) -> void:
 	var angle_vector = Vector2.from_angle(angle)
-	var tail_delta = angle_vector * -_heading_length
+	var tail_delta = angle_vector * -_arrow_length * zoom
 	
-	var point_a = target + tail_delta.rotated(deg_to_rad(_heading_angle_degrees))
-	_graph.draw_line(target, point_a, _line_color, _line_width)
+	var line_width = _line_width * zoom
 	
-	var point_b = target + tail_delta.rotated(deg_to_rad(-_heading_angle_degrees))
-	_graph.draw_line(target, point_b, _line_color, _line_width)
+	var point_a = target + tail_delta.rotated(deg_to_rad(_arrow_angle_degrees / 2))
+	_graph.draw_line(target, point_a, _line_color, line_width)
+	
+	var point_b = target + tail_delta.rotated(deg_to_rad(-_arrow_angle_degrees / 2))
+	_graph.draw_line(target, point_b, _line_color, line_width)
 	
 	if closed or filled:
-		_graph.draw_line(point_a, point_b, _line_color, _line_width)
+		_graph.draw_line(point_a, point_b, _line_color, line_width)
 	
 	if filled:
 		_graph.draw_colored_polygon([target, point_a, point_b], _line_color)
 
 
-func _draw_diamond_heading(target: Vector2, angle: float, filled: bool = false) -> void:
-	_draw_arrow_heading(target, angle, filled, filled)
+func _draw_diamond_heading(target: Vector2, angle: float, zoom: float,
+		filled: bool = false) -> void:
+	var angle_vector = Vector2.from_angle(angle)
+	var tail_delta = angle_vector * -_diamond_length * zoom
 	
-	var heading_midline_length = cos(deg_to_rad(_heading_angle_degrees)) * _heading_length
-	var diamond_midline_vector = Vector2.from_angle(angle) * heading_midline_length * 2
-	_draw_arrow_heading(target - diamond_midline_vector, angle + PI, filled, filled)
+	var line_width = _line_width * zoom
+	
+	var point_a = target + tail_delta.rotated(deg_to_rad(_diamond_angle_degrees / 2)) / 2
+	var point_b = target + tail_delta
+	var point_c = target + tail_delta.rotated(deg_to_rad(-_diamond_angle_degrees / 2)) / 2
+	
+	var polygon_points = [target, point_a, point_b, point_c, target]
+	_graph.draw_polyline(polygon_points, _line_color, line_width)
+	
+	if filled:
+		_graph.draw_colored_polygon(polygon_points, _line_color)
