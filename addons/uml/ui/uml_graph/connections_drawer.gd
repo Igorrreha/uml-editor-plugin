@@ -3,6 +3,8 @@ extends Node
 
 @export var _graph: UmlGraph
 
+@export var connections_settings: Array[UmlConnectionSettings]
+
 @export_group("Line")
 @export var _line_width: float
 @export var _line_dash: float
@@ -34,26 +36,38 @@ func on_graph_draw() -> void:
 		
 		point_a += _get_point_on_rect(node_a.get_rect(), delta_angle)
 		point_b -= _get_point_on_rect(node_b.get_rect(), delta_angle)
-		
-		match connection.type:
-			UmlGraph.ConnectionType.ASSOCIATION:
-				_graph.draw_line(point_a, point_b, _line_color, line_width)
-			
-			UmlGraph.ConnectionType.DIRECTED_ASSOCIATION:
-				_graph.draw_line(point_a, point_b, _line_color, line_width)
-				_draw_arrow_heading(point_b, delta_angle, zoom, true, true)
-			
-			UmlGraph.ConnectionType.COMPOSITION:
-				_graph.draw_line(point_a, point_b, _line_color, line_width)
-				_draw_diamond_heading(point_b, delta_angle, zoom, true)
-			
-			UmlGraph.ConnectionType.INHERITANCE:
-				_graph.draw_line(point_a, point_b, _line_color, line_width)
-				_draw_arrow_heading(point_b, delta_angle, zoom, true, false)
-			
-			UmlGraph.ConnectionType.REALIZATION:
-				_graph.draw_dashed_line(point_a, point_b, _line_color, line_width, line_dash)
-				_draw_arrow_heading(point_b, delta_angle, zoom, true, false)
+		_draw_connection(connection.type, point_a, point_b, _line_color, line_width, line_dash)
+
+
+func _draw_connection(type: UmlConnection.Type, from: Vector2, to: Vector2,
+		color: Color, line_width: float, line_dash: float) -> void:
+	var connection_settings = connections_settings.filter(func(settings: UmlConnectionSettings):
+		return settings.type == type)
+	
+	if connection_settings.is_empty():
+		printerr("Can't find settings for connection %s" % UmlConnection.Type.find_key(type))
+		return
+	
+	var settings = connection_settings[0] as UmlConnectionSettings
+	match settings.line_type:
+		UmlConnection.LineType.STRAIGHT:
+			_graph.draw_line(from, to, color, line_width)
+		UmlConnection.LineType.DASHED:
+			_graph.draw_dashed_line(from, to, color, line_width, line_dash)
+	
+	var delta = to - from
+	var delta_angle = delta.angle()
+	match settings.head_type:
+		UmlConnection.HeadType.OPENED_ARROW:
+			_draw_arrow_head(to, delta_angle, _graph.zoom)
+		UmlConnection.HeadType.ARROW:
+			_draw_arrow_head(to, delta_angle, _graph.zoom, true)
+		UmlConnection.HeadType.FILLED_ARROW:
+			_draw_arrow_head(to, delta_angle, _graph.zoom, true, true)
+		UmlConnection.HeadType.DIAMOND:
+			_draw_diamond_head(to, delta_angle, _graph.zoom)
+		UmlConnection.HeadType.FILLED_DIAMOND:
+			_draw_diamond_head(to, delta_angle, _graph.zoom, true)
 
 
 func _get_point_on_rect(rect: Rect2, angle: float) -> Vector2:
@@ -76,7 +90,7 @@ func _get_point_on_rect(rect: Rect2, angle: float) -> Vector2:
 	return Vector2.ZERO
 
 
-func _draw_arrow_heading(target: Vector2, angle: float, zoom: float,
+func _draw_arrow_head(target: Vector2, angle: float, zoom: float,
 		closed: bool = false, filled: bool = false) -> void:
 	var angle_vector = Vector2.from_angle(angle)
 	var tail_delta = angle_vector * -_arrow_length * zoom
@@ -96,7 +110,7 @@ func _draw_arrow_heading(target: Vector2, angle: float, zoom: float,
 		_graph.draw_colored_polygon([target, point_a, point_b], _line_color)
 
 
-func _draw_diamond_heading(target: Vector2, angle: float, zoom: float,
+func _draw_diamond_head(target: Vector2, angle: float, zoom: float,
 		filled: bool = false) -> void:
 	var angle_vector = Vector2.from_angle(angle)
 	var tail_delta = angle_vector * -_diamond_length * zoom
