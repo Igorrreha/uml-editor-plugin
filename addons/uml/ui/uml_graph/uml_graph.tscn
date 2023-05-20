@@ -1,11 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://ceaqb8ru48l4k"]
+[gd_scene load_steps=14 format=3 uid="uid://imri6te0yy4x"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_graph.gd" id="1_xfq3s"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/connections_drawer.gd" id="2_gunas"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_editor_popup_menu.gd" id="2_sk26r"]
 [ext_resource type="Script" path="res://addons/uml/ui/connection/uml_connection_settings.gd" id="3_8tugd"]
 [ext_resource type="Script" path="res://addons/uml/ui/nodes_creator.gd" id="3_wxkrg"]
-[ext_resource type="PackedScene" uid="uid://ckye61wfme40m" path="res://addons/uml/ui/node/class_node.tscn" id="4_7bm0n"]
+[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/class_node.tscn" id="6_ga474"]
 
 [sub_resource type="Resource" id="Resource_rildy"]
 resource_name = "ASSOCIATION"
@@ -102,7 +102,7 @@ script = ExtResource("2_sk26r")
 
 [node name="NodesCreator" type="Node" parent="." node_paths=PackedStringArray("_container")]
 script = ExtResource("3_wxkrg")
-_tscn_class_node = ExtResource("4_7bm0n")
+_tscn_class_node = ExtResource("6_ga474")
 _container = NodePath("../GraphEdit")
 
 [connection signal="draw" from="GraphEdit" to="GraphEdit/ConnectionsDrawer" method="on_graph_draw"]

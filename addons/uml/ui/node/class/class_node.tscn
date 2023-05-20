@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckye61wfme40m"]
+[gd_scene load_steps=3 format=3 uid="uid://bdiixdi8i462y"]
 
-[ext_resource type="Script" path="res://addons/uml/ui/node/class_node.gd" id="1_h1hxj"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
+[ext_resource type="PackedScene" uid="uid://dsl66ddhk0jtw" path="res://addons/uml/ui/node/class/access_modifier.tscn" id="2_ltaoo"]
 
 [node name="ClassNode" type="GraphNode"]
-offset_right = 36.0
-offset_bottom = 54.0
+offset_left = 1.0
+offset_right = 101.0
+offset_bottom = 136.0
 mouse_filter = 1
 title = "Class"
 slot/0/left_enabled = false
@@ -39,7 +41,13 @@ script = ExtResource("1_h1hxj")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="AccessModifier" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_ltaoo")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "signal"
 
