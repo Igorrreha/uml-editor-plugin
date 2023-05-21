@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdiixdi8i462y"]
+[gd_scene load_steps=5 format=3 uid="uid://bdiixdi8i462y"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="PackedScene" uid="uid://dsl66ddhk0jtw" path="res://addons/uml/ui/node/class/access_modifier.tscn" id="2_ltaoo"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/title_editor.gd" id="3_wq5ff"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t8qm2"]
+content_margin_left = 19.0
 
 [node name="ClassNode" type="GraphNode"]
 offset_left = 1.0
@@ -64,3 +68,27 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer3"]
 layout_mode = 2
 text = "method"
+
+[node name="TitleEditor" type="Node" parent="." node_paths=PackedStringArray("_class_node", "_editing_popup", "_title_line_edit")]
+script = ExtResource("3_wq5ff")
+_class_node = NodePath("..")
+_editing_popup = NodePath("EditClassNamePopup")
+_title_line_edit = NodePath("EditClassNamePopup/LineEdit")
+
+[node name="EditClassNamePopup" type="Popup" parent="TitleEditor"]
+size = Vector2i(100, 31)
+
+[node name="LineEdit" type="LineEdit" parent="TitleEditor/EditClassNamePopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_t8qm2")
+text = "Class"
+flat = true
+select_all_on_focus = true
+
+[connection signal="gui_input" from="." to="TitleEditor" method="_on_class_node_gui_input"]
+[connection signal="popup_hide" from="TitleEditor/EditClassNamePopup" to="TitleEditor" method="_on_editing_popup_hide"]

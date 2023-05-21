@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_editor_popup_menu.gd" id="2_sk26r"]
 [ext_resource type="Script" path="res://addons/uml/ui/connection/uml_connection_settings.gd" id="3_8tugd"]
 [ext_resource type="Script" path="res://addons/uml/ui/nodes_creator.gd" id="3_wxkrg"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/class_node.tscn" id="6_ga474"]
+[ext_resource type="PackedScene" uid="uid://bdiixdi8i462y" path="res://addons/uml/ui/node/class/class_node.tscn" id="6_ga474"]
 
 [sub_resource type="Resource" id="Resource_rildy"]
 resource_name = "ASSOCIATION"
