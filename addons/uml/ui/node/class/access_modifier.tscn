@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsl66ddhk0jtw"]
+[gd_scene load_steps=4 format=3 uid="uid://dsl66ddhk0jtw"]
+
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/access_modifier.gd" id="1_qdwma"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_5bbd0"]
 
@@ -27,3 +29,6 @@ popup/item_0/text = "+"
 popup/item_0/id = 0
 popup/item_1/text = "-"
 popup/item_1/id = 1
+script = ExtResource("1_qdwma")
+
+[connection signal="item_selected" from="." to="." method="_on_item_selected"]

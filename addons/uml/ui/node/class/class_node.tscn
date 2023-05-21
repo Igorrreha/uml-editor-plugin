@@ -1,18 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdiixdi8i462y"]
+[gd_scene load_steps=6 format=3 uid="uid://bd0042p6okdl8"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
-[ext_resource type="PackedScene" uid="uid://dsl66ddhk0jtw" path="res://addons/uml/ui/node/class/access_modifier.tscn" id="2_ltaoo"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
+[ext_resource type="PackedScene" uid="uid://bfcenl6pi37pf" path="res://addons/uml/ui/node/class/members/variable.tscn" id="2_msk3s"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/title_editor.gd" id="3_wq5ff"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t8qm2"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3mtia"]
 content_margin_left = 19.0
 
 [node name="ClassNode" type="GraphNode"]
-offset_left = 1.0
-offset_right = 101.0
+offset_right = 203.0
 offset_bottom = 136.0
-mouse_filter = 1
 title = "Class"
+resizable = true
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -40,32 +40,57 @@ slot/2/right_type = 0
 slot/2/right_color = Color(1, 1, 1, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
 script = ExtResource("1_h1hxj")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Signals" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Signals"]
 layout_mode = 2
 
-[node name="AccessModifier" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_ltaoo")]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Signals/HBoxContainer"]
 layout_mode = 2
 text = "signal"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer2"]
+[node name="Variables" type="VBoxContainer" parent="." node_paths=PackedStringArray("_add_variable_button")]
 layout_mode = 2
-text = "field"
+script = ExtResource("2_gmavf")
+_tscn_variable = ExtResource("2_msk3s")
+_add_variable_button = NodePath("Button")
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+[node name="Button" type="Button" parent="Variables"]
+visible = false
+layout_mode = 2
+text = "+"
+
+[node name="HSeparator2" type="HSeparator" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer3"]
+[node name="Methods" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Methods"]
 layout_mode = 2
 text = "method"
 
@@ -85,10 +110,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxEmpty_t8qm2")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3mtia")
 text = "Class"
+context_menu_enabled = false
 flat = true
 select_all_on_focus = true
 
 [connection signal="gui_input" from="." to="TitleEditor" method="_on_class_node_gui_input"]
+[connection signal="variable_added" from="Variables" to="." method="add_variable"]
+[connection signal="variable_removed" from="Variables" to="." method="remove_variable"]
+[connection signal="button_down" from="Variables/Button" to="Variables" method="add_variable"]
 [connection signal="popup_hide" from="TitleEditor/EditClassNamePopup" to="TitleEditor" method="_on_editing_popup_hide"]

@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://56an2mymekb2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yt7at"]
+
+[resource]
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_yt7at")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_yt7at")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_yt7at")
