@@ -39,6 +39,11 @@ func remove_method(description: MethodDescription) -> void:
 	_methods.remove_at(_methods.find(description))
 
 
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
+		get_viewport().set_input_as_handled()
+
+
 class VariableDescription:
 	var access_modifier: AccessModifier
 	var name: String
