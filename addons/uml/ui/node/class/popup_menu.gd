@@ -18,4 +18,8 @@ func _on_class_node_gui_input(event: InputEvent) -> void:
 	if (event is InputEventMouseButton
 	and event.button_index == MOUSE_BUTTON_RIGHT
 	and event.is_pressed()):
-		popup(Rect2(event.global_position, size))
+		open()
+
+
+func open():
+	popup(Rect2(get_mouse_position(), size))

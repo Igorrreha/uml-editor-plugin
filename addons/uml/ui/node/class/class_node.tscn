@@ -1,13 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://bd0042p6okdl8"]
+[gd_scene load_steps=10 format=3 uid="uid://bd0042p6okdl8"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
 [ext_resource type="PackedScene" uid="uid://bfcenl6pi37pf" path="res://addons/uml/ui/node/class/members/variable.tscn" id="2_msk3s"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/title_editor.gd" id="3_wq5ff"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]
+[ext_resource type="Script" path="res://addons/uml/ui/shortcut_handler.gd" id="6_w3c52"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3mtia"]
 content_margin_left = 19.0
+
+[sub_resource type="InputEventKey" id="InputEventKey_wr3my"]
+device = -1
+shift_pressed = true
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_a8mng"]
+events = [SubResource("InputEventKey_wr3my")]
 
 [node name="ClassNode" type="GraphNode"]
 offset_right = 203.0
@@ -60,6 +69,15 @@ slot/4/right_type = 0
 slot/4/right_color = Color(1, 1, 1, 1)
 slot/4/right_icon = null
 slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
 script = ExtResource("1_h1hxj")
 
 [node name="Signals" type="VBoxContainer" parent="."]
@@ -117,7 +135,15 @@ context_menu_enabled = false
 flat = true
 select_all_on_focus = true
 
-[node name="PopupMenu" type="PopupMenu" parent="." node_paths=PackedStringArray("_class_node_members_container")]
+[node name="ShortcutHandler" type="Control" parent="." node_paths=PackedStringArray("shortcut_context")]
+layout_mode = 2
+shortcut_context = NodePath("..")
+script = ExtResource("6_w3c52")
+_shortcut = SubResource("Shortcut_a8mng")
+
+[node name="PopupMenu" type="PopupMenu" parent="ShortcutHandler" node_paths=PackedStringArray("_class_node_members_container")]
+handle_input_locally = false
+size = Vector2i(125, 100)
 item_count = 3
 item_0/text = "Add variable"
 item_0/id = 0
@@ -126,12 +152,13 @@ item_1/id = 1
 item_2/text = "Add signal"
 item_2/id = 2
 script = ExtResource("5_u62dd")
-_class_node_members_container = NodePath("../Variables")
+_class_node_members_container = NodePath("../../Variables")
 
 [connection signal="gui_input" from="." to="TitleEditor" method="_on_class_node_gui_input"]
-[connection signal="gui_input" from="." to="PopupMenu" method="_on_class_node_gui_input"]
+[connection signal="gui_input" from="." to="ShortcutHandler/PopupMenu" method="_on_class_node_gui_input"]
 [connection signal="variable_added" from="Variables" to="." method="add_variable"]
 [connection signal="variable_removed" from="Variables" to="." method="remove_variable"]
 [connection signal="button_down" from="Variables/Button" to="Variables" method="add_variable"]
 [connection signal="popup_hide" from="TitleEditor/EditClassNamePopup" to="TitleEditor" method="_on_editing_popup_hide"]
-[connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
+[connection signal="shortcut_handled" from="ShortcutHandler" to="ShortcutHandler/PopupMenu" method="open"]
+[connection signal="id_pressed" from="ShortcutHandler/PopupMenu" to="ShortcutHandler/PopupMenu" method="_on_id_pressed"]
