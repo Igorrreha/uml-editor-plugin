@@ -3,6 +3,7 @@ extends VBoxContainer
 
 
 @export var _tscn_variable: PackedScene
+@export var _tscn_signal: PackedScene
 @export var _add_variable_button: Button
 
 
@@ -21,6 +22,12 @@ func add_variable() -> void:
 	_on_member_added(new_variable)
 
 
+func add_signal() -> void:
+	var new_signal = _tscn_signal.instantiate()
+	add_child(new_signal)
+	_on_member_added(new_signal)
+
+
 func _ready() -> void:
 	for child in get_children():
 		_on_member_added(child)
@@ -33,6 +40,10 @@ func _on_member_added(node: Node) -> void:
 		variable_added.emit(node.description)
 		node.tree_exited.connect(_on_child_exited_tree.bind(node))
 	
+	if node is UmlClassNodeSignal:
+		variable_added.emit(node.description)
+		node.tree_exited.connect(_on_child_exited_tree.bind(node))
+	
 	_update_add_variable_button_visibility()
 
 
@@ -41,9 +52,13 @@ func _on_child_exited_tree(node: Node) -> void:
 		variable_removed.emit(node.description)
 		node.tree_exited.disconnect(_on_child_exited_tree)
 	
+	if node is UmlClassNodeSignal:
+		variable_removed.emit(node.description)
+		node.tree_exited.disconnect(_on_child_exited_tree)
+	
 	_update_add_variable_button_visibility()
 
 
 func _update_add_variable_button_visibility() -> void:
 	_add_variable_button.visible = not get_children().any(func(child: Node):
-		return child is UmlClassNodeVariable)
+		return child is UmlClassNodeVariable or child is UmlClassNodeSignal)

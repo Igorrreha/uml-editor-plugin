@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://cmddr44h3ur1e"]
+
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/members/signal.gd" id="1_lljek"]
+[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="3_1huy4"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/members/arguments_container.gd" id="3_jacx8"]
+[ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="3_v725n"]
+[ext_resource type="PackedScene" uid="uid://v1iw3tpcfdct" path="res://addons/uml/ui/node/class/members/argument.tscn" id="4_wm4qk"]
+[ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/members/arguments_divider.tscn" id="5_own27"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_rq4u3"]
+device = -1
+ctrl_pressed = true
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_4mv78"]
+events = [SubResource("InputEventKey_rq4u3")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_2ru06"]
+device = -1
+ctrl_pressed = true
+keycode = 4194312
+
+[sub_resource type="Shortcut" id="Shortcut_otmy4"]
+events = [SubResource("InputEventKey_2ru06")]
+
+[node name="Signal" type="HBoxContainer"]
+mouse_filter = 0
+theme_override_constants/separation = 0
+script = ExtResource("1_lljek")
+_default_name = "signal"
+
+[node name="Name" type="LineEdit" parent="."]
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("3_1huy4")
+text = "variable"
+expand_to_text_length = true
+context_menu_enabled = false
+select_all_on_focus = true
+
+[node name="Parenthesis" type="Label" parent="."]
+layout_mode = 2
+text = "("
+
+[node name="Arguments" type="HBoxContainer" parent="."]
+layout_mode = 2
+script = ExtResource("3_jacx8")
+_tscn_argument = ExtResource("4_wm4qk")
+_tscn_chlid_divider = ExtResource("5_own27")
+
+[node name="AddArgumentShortcutHandler" parent="." node_paths=PackedStringArray("shortcut_context") instance=ExtResource("3_v725n")]
+layout_mode = 2
+shortcut_context = NodePath("..")
+_shortcut = SubResource("Shortcut_4mv78")
+
+[node name="Parenthesis2" type="Label" parent="."]
+layout_mode = 2
+text = ")"
+
+[node name="DestroyShortcutHandler" parent="." node_paths=PackedStringArray("shortcut_context") instance=ExtResource("3_v725n")]
+layout_mode = 2
+shortcut_context = NodePath("..")
+_shortcut = SubResource("Shortcut_otmy4")
+
+[connection signal="text_changed" from="Name" to="." method="_on_name_text_changed"]
+[connection signal="argument_added" from="Arguments" to="." method="add_argument"]
+[connection signal="argument_removed" from="Arguments" to="." method="remove_argument"]
+[connection signal="shortcut_handled" from="AddArgumentShortcutHandler" to="Arguments" method="add_argument"]
+[connection signal="shortcut_handled" from="DestroyShortcutHandler" to="." method="queue_free"]

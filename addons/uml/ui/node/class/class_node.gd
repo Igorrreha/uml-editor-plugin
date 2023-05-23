@@ -19,20 +19,20 @@ func add_signal(description: SignalDescription) -> void:
 	_signals.append(description)
 
 
-func add_variable(description: VariableDescription) -> void:
-	_variables.append(description)
-
-
-func add_method(description: MethodDescription) -> void:
-	_methods.append(description)
-
-
 func remove_signal(description: SignalDescription) -> void:
 	_signals.remove_at(_signals.find(description))
 
 
+func add_variable(description: VariableDescription) -> void:
+	_variables.append(description)
+
+
 func remove_variable(description: VariableDescription) -> void:
 	_variables.remove_at(_variables.find(description))
+
+
+func add_method(description: MethodDescription) -> void:
+	_methods.append(description)
 
 
 func remove_method(description: MethodDescription) -> void:
@@ -55,18 +55,32 @@ class VariableDescription:
 		self.type = type
 
 
-class MethodArgumentDescription:
+class ArgumentDescription:
 	var name: String
 	var type: String
+	
+	func _init(name: String, type: String) -> void:
+		self.name = name
+		self.type = type
 
 
 class MethodDescription:
 	var access_modifier: AccessModifier
 	var name: String
-	var arguments: Array[MethodArgumentDescription]
+	var arguments: Array[ArgumentDescription]
 	var return_type: String
+	
+	func _init(access_modifier: AccessModifier, name: String, 
+			arguments: Array[ArgumentDescription]) -> void:
+		self.access_modifier = access_modifier
+		self.name = name
+		self.arguments = arguments
 
 
 class SignalDescription:
 	var name: String
-	var arguments: Array[MethodArgumentDescription]
+	var arguments: Array[ArgumentDescription]
+	
+	func _init(name: String, arguments: Array[ArgumentDescription]) -> void:
+		self.name = name
+		self.arguments = arguments
