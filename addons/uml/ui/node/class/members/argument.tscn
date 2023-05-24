@@ -9,7 +9,7 @@ device = -1
 ctrl_pressed = true
 keycode = 4194312
 
-[sub_resource type="Shortcut" id="Shortcut_c8co4"]
+[sub_resource type="Shortcut" id="Shortcut_gr8er"]
 events = [SubResource("InputEventKey_2ru06")]
 
 [node name="Argument" type="HBoxContainer"]
@@ -42,7 +42,7 @@ select_all_on_focus = true
 [node name="DestroyShortcutHandler" parent="." node_paths=PackedStringArray("shortcut_context") instance=ExtResource("3_b8vgf")]
 layout_mode = 2
 shortcut_context = NodePath("..")
-_shortcut = SubResource("Shortcut_c8co4")
+_shortcut = SubResource("Shortcut_gr8er")
 
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
 [connection signal="text_changed" from="Name" to="." method="_on_name_text_changed"]

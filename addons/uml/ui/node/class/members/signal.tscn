@@ -17,7 +17,7 @@ events = [SubResource("InputEventKey_rq4u3")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_2ru06"]
 device = -1
-ctrl_pressed = true
+shift_pressed = true
 keycode = 4194312
 
 [sub_resource type="Shortcut" id="Shortcut_otmy4"]
