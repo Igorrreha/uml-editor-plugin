@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cw5x16vnx08ch"]
+[gd_scene load_steps=14 format=3 uid="uid://cw5x16vnx08ch"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/title_editor.gd" id="3_wq5ff"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="5_lfrqw"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]
+[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="6_mwrgt"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_r4g78"]
 device = -1
@@ -51,77 +52,79 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
-slot/2/left_enabled = false
-slot/2/left_type = 0
-slot/2/left_color = Color(1, 1, 1, 1)
-slot/2/left_icon = null
-slot/2/right_enabled = false
-slot/2/right_type = 0
-slot/2/right_color = Color(1, 1, 1, 1)
-slot/2/right_icon = null
-slot/2/draw_stylebox = true
-slot/3/left_enabled = false
-slot/3/left_type = 0
-slot/3/left_color = Color(1, 1, 1, 1)
-slot/3/left_icon = null
-slot/3/right_enabled = false
-slot/3/right_type = 0
-slot/3/right_color = Color(1, 1, 1, 1)
-slot/3/right_icon = null
-slot/3/draw_stylebox = true
-slot/4/left_enabled = false
-slot/4/left_type = 0
-slot/4/left_color = Color(1, 1, 1, 1)
-slot/4/left_icon = null
-slot/4/right_enabled = false
-slot/4/right_type = 0
-slot/4/right_color = Color(1, 1, 1, 1)
-slot/4/right_icon = null
-slot/4/draw_stylebox = true
-slot/5/left_enabled = false
-slot/5/left_type = 0
-slot/5/left_color = Color(1, 1, 1, 1)
-slot/5/left_icon = null
-slot/5/right_enabled = false
-slot/5/right_type = 0
-slot/5/right_color = Color(1, 1, 1, 1)
-slot/5/right_icon = null
-slot/5/draw_stylebox = true
 script = ExtResource("1_h1hxj")
 
-[node name="Signals" type="VBoxContainer" parent="." node_paths=PackedStringArray("_add_variable_button")]
+[node name="Members" type="VBoxContainer" parent="." node_paths=PackedStringArray("_signals_container", "_variables_container", "_methods_container", "_add_signal_button", "_add_variable_button", "_add_method_button")]
 layout_mode = 2
+theme_override_constants/separation = 0
 script = ExtResource("2_gmavf")
 _tscn_signal = ExtResource("2_xhax0")
-_add_variable_button = NodePath("Button")
+_tscn_variable = ExtResource("2_msk3s")
+_signals_container = NodePath("Signals")
+_variables_container = NodePath("Variables")
+_methods_container = NodePath("Methods")
+_add_signal_button = NodePath("Signals/Add")
+_add_variable_button = NodePath("Variables/Add")
+_add_method_button = NodePath("Methods/Add")
 
-[node name="AddShortcutHandler" parent="Signals" node_paths=PackedStringArray("shortcut_context") instance=ExtResource("5_lfrqw")]
+[node name="Signals" type="VBoxContainer" parent="Members"]
 layout_mode = 2
-shortcut_context = NodePath("..")
+
+[node name="ParentIgnore" type="Node" parent="Members/Signals"]
+
+[node name="AddShortcutHandler" parent="Members/Signals/ParentIgnore" node_paths=PackedStringArray("shortcut_context") instance=ExtResource("5_lfrqw")]
+offset_left = 18.0
+offset_top = 42.0
+offset_right = 185.0
+offset_bottom = 42.0
+shortcut_context = NodePath("../..")
 _shortcut = SubResource("Shortcut_opmbj")
 
-[node name="Button" type="Button" parent="Signals"]
+[node name="Add" type="Button" parent="Members/Signals"]
 layout_mode = 2
 text = "+"
 
-[node name="HSeparator" type="HSeparator" parent="."]
+[node name="HSeparator" type="HSeparator" parent="Members"]
+layout_mode = 2
+theme = ExtResource("6_mwrgt")
+
+[node name="Variables" type="VBoxContainer" parent="Members"]
 layout_mode = 2
 
-[node name="Variables" type="VBoxContainer" parent="." node_paths=PackedStringArray("_add_variable_button")]
-layout_mode = 2
-script = ExtResource("2_gmavf")
-_tscn_variable = ExtResource("2_msk3s")
-_add_variable_button = NodePath("Button")
+[node name="ParentIgnore" type="Node" parent="Members/Variables"]
 
-[node name="Button" type="Button" parent="Variables"]
+[node name="AddShortcutHandler2" parent="Members/Variables/ParentIgnore" node_paths=PackedStringArray("shortcut_context") instance=ExtResource("5_lfrqw")]
+offset_left = 18.0
+offset_top = 78.0
+offset_right = 185.0
+offset_bottom = 78.0
+shortcut_context = NodePath("../..")
+_shortcut = SubResource("Shortcut_opmbj")
+
+[node name="Add" type="Button" parent="Members/Variables"]
 layout_mode = 2
 text = "+"
 
-[node name="HSeparator2" type="HSeparator" parent="."]
+[node name="HSeparator2" type="HSeparator" parent="Members"]
+layout_mode = 2
+theme = ExtResource("6_mwrgt")
+
+[node name="Methods" type="VBoxContainer" parent="Members"]
 layout_mode = 2
 
-[node name="Methods" type="VBoxContainer" parent="."]
+[node name="ParentIgnore" type="Node" parent="Members/Methods"]
+
+[node name="AddShortcutHandler3" parent="Members/Methods/ParentIgnore" node_paths=PackedStringArray("shortcut_context") instance=ExtResource("5_lfrqw")]
+offset_left = 18.0
+offset_top = 78.0
+offset_right = 185.0
+offset_bottom = 78.0
+shortcut_context = NodePath("../..")
+_shortcut = SubResource("Shortcut_opmbj")
+
+[node name="Add" type="Button" parent="Members/Methods"]
 layout_mode = 2
+text = "+"
 
 [node name="TitleEditor" type="Node" parent="." node_paths=PackedStringArray("_class_node", "_editing_popup", "_title_line_edit")]
 script = ExtResource("3_wq5ff")
@@ -160,17 +163,22 @@ item_1/id = 1
 item_2/text = "Add signal"
 item_2/id = 2
 script = ExtResource("5_u62dd")
-_class_node_members_container = NodePath("../../Variables")
+_class_node_members_container = NodePath("../../Members")
 
 [connection signal="gui_input" from="." to="TitleEditor" method="_on_class_node_gui_input"]
 [connection signal="gui_input" from="." to="ShortcutHandler/PopupMenu" method="_on_class_node_gui_input"]
-[connection signal="signal_added" from="Signals" to="." method="add_signal"]
-[connection signal="signal_removed" from="Signals" to="." method="remove_signal"]
-[connection signal="shortcut_handled" from="Signals/AddShortcutHandler" to="Signals" method="add_signal"]
-[connection signal="button_down" from="Signals/Button" to="Signals" method="add_signal"]
-[connection signal="variable_added" from="Variables" to="." method="add_variable"]
-[connection signal="variable_removed" from="Variables" to="." method="remove_variable"]
-[connection signal="button_down" from="Variables/Button" to="Variables" method="add_variable"]
+[connection signal="method_added" from="Members" to="." method="add_method"]
+[connection signal="method_removed" from="Members" to="." method="remove_method"]
+[connection signal="signal_added" from="Members" to="." method="add_signal"]
+[connection signal="signal_removed" from="Members" to="." method="remove_signal"]
+[connection signal="variable_added" from="Members" to="." method="add_variable"]
+[connection signal="variable_removed" from="Members" to="." method="remove_variable"]
+[connection signal="shortcut_handled" from="Members/Signals/ParentIgnore/AddShortcutHandler" to="Members" method="add_signal"]
+[connection signal="button_down" from="Members/Signals/Add" to="Members" method="add_signal"]
+[connection signal="shortcut_handled" from="Members/Variables/ParentIgnore/AddShortcutHandler2" to="Members" method="add_variable"]
+[connection signal="button_down" from="Members/Variables/Add" to="Members" method="add_variable"]
+[connection signal="shortcut_handled" from="Members/Methods/ParentIgnore/AddShortcutHandler3" to="Members" method="add_method"]
+[connection signal="button_down" from="Members/Methods/Add" to="Members" method="add_method"]
 [connection signal="popup_hide" from="TitleEditor/EditClassNamePopup" to="TitleEditor" method="_on_editing_popup_hide"]
 [connection signal="shortcut_handled" from="ShortcutHandler" to="ShortcutHandler/PopupMenu" method="open"]
 [connection signal="id_pressed" from="ShortcutHandler/PopupMenu" to="ShortcutHandler/PopupMenu" method="_on_id_pressed"]
