@@ -44,4 +44,4 @@ item_0/id = 0
 [connection signal="modifier_selected" from="AccessModifier" to="." method="set_access_modifier"]
 [connection signal="text_changed" from="Name" to="." method="set_variable_name"]
 [connection signal="text_changed" from="Type" to="." method="set_variable_type"]
-[connection signal="index_pressed" from="PopupMenu" to="." method="_on_popup_menu_index_pressed"]
+[connection signal="index_pressed" from="PopupMenu" to="." method="queue_free" unbinds=1]

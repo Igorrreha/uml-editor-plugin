@@ -29,3 +29,11 @@ func _ready() -> void:
 
 func _on_arguments_changed() -> void:
 	description.arguments = _arguments
+
+
+func _gui_input(event: InputEvent) -> void:
+	if (event is InputEventMouseButton
+	and event.button_index == MOUSE_BUTTON_RIGHT
+	and event.is_pressed()):
+		var popup = $PopupMenu as PopupMenu
+		popup.popup(Rect2(event.global_position, popup.size))

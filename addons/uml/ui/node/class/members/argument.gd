@@ -24,6 +24,9 @@ func _ready() -> void:
 	$Type.text = _default_type
 
 
-func _on_focus_exited() -> void:
-	if name_edit.text == "":
-		queue_free()
+func _gui_input(event: InputEvent) -> void:
+	if (event is InputEventMouseButton
+	and event.button_index == MOUSE_BUTTON_RIGHT
+	and event.is_pressed()):
+		var popup = $PopupMenu as PopupMenu
+		popup.popup(Rect2(event.global_position, popup.size))

@@ -30,10 +30,7 @@ func _ready() -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if (event is InputEventMouseButton
-	and event.button_index == MOUSE_BUTTON_RIGHT):
+	and event.button_index == MOUSE_BUTTON_RIGHT
+	and event.is_pressed()):
 		var popup = $PopupMenu as PopupMenu
 		popup.popup(Rect2(event.global_position, popup.size))
-
-
-func _on_popup_menu_index_pressed(index: int) -> void:
-	queue_free()
