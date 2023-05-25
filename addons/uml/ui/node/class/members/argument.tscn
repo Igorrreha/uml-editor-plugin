@@ -13,6 +13,7 @@ keycode = 4194312
 events = [SubResource("InputEventKey_2ru06")]
 
 [node name="Argument" type="HBoxContainer"]
+theme = ExtResource("1_uk4t6")
 script = ExtResource("1_uw22k")
 _default_name = "arg"
 _default_type = "Type"
@@ -20,7 +21,6 @@ _default_type = "Type"
 [node name="Name" type="LineEdit" parent="."]
 layout_mode = 2
 mouse_filter = 1
-theme = ExtResource("1_uk4t6")
 text = "arg"
 expand_to_text_length = true
 context_menu_enabled = false
@@ -28,13 +28,12 @@ select_all_on_focus = true
 
 [node name="Colon" type="Label" parent="."]
 layout_mode = 2
-text = ":"
+text = " : "
 
 [node name="Type" type="LineEdit" parent="."]
 layout_mode = 2
 mouse_filter = 1
-theme = ExtResource("1_uk4t6")
-text = "#"
+text = "Type"
 expand_to_text_length = true
 context_menu_enabled = false
 select_all_on_focus = true

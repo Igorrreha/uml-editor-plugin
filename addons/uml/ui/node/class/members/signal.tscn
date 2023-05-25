@@ -25,14 +25,13 @@ events = [SubResource("InputEventKey_2ru06")]
 
 [node name="Signal" type="HBoxContainer"]
 mouse_filter = 0
-theme_override_constants/separation = 0
+theme = ExtResource("3_1huy4")
 script = ExtResource("1_lljek")
 _default_name = "signal"
 
 [node name="Name" type="LineEdit" parent="."]
 layout_mode = 2
 mouse_filter = 1
-theme = ExtResource("3_1huy4")
 text = "variable"
 expand_to_text_length = true
 context_menu_enabled = false

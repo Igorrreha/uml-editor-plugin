@@ -6,6 +6,7 @@
 
 [node name="Variable" type="HBoxContainer"]
 mouse_filter = 0
+theme = ExtResource("2_5k2ag")
 script = ExtResource("1_4xlro")
 _default_name = "variable"
 _default_type = "null"
@@ -24,7 +25,7 @@ select_all_on_focus = true
 
 [node name="Colon" type="Label" parent="."]
 layout_mode = 2
-text = ":"
+text = " : "
 
 [node name="Type" type="LineEdit" parent="."]
 layout_mode = 2

@@ -32,6 +32,7 @@ expand_margin_right = 2.0
 [resource]
 HBoxContainer/constants/separation = 0
 HSeparator/constants/separation = 5
+LineEdit/constants/minimum_character_width = 0
 LineEdit/styles/focus = SubResource("StyleBoxFlat_k6b7e")
 LineEdit/styles/normal = SubResource("StyleBoxEmpty_yt7at")
 LineEdit/styles/read_only = SubResource("StyleBoxEmpty_yt7at")
