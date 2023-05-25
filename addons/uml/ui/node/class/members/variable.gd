@@ -10,22 +10,22 @@ extends HBoxContainer
 		_default_name, _default_type)
 
 
+func set_access_modifier(modifier: UmlClassNode.AccessModifier) -> void:
+	description.access_modifier = modifier
+
+
+func set_variable_name(new_text: String) -> void:
+	description.name = new_text
+
+
+func set_variable_type(new_text: String) -> void:
+	description.type = new_text
+
+
 func _ready() -> void:
 	$AccessModifier.selected = _default_access_modifier
 	$Name.text = _default_name
 	$Type.text = _default_type
-
-
-func _on_access_modifier_selected(modifier: UmlClassNode.AccessModifier) -> void:
-	description.access_modifier = modifier
-
-
-func _on_name_text_changed(new_text: String) -> void:
-	description.name = new_text
-
-
-func _on_type_text_changed(new_text: String) -> void:
-	description.type = new_text
 
 
 func _gui_input(event: InputEvent) -> void:

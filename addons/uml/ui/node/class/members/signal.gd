@@ -19,12 +19,12 @@ func remove_argument(argument: UmlClassNode.ArgumentDescription) -> void:
 	_on_arguments_changed()
 
 
+func set_signal_name(new_text: String) -> void:
+	description.name = new_text
+
+
 func _ready() -> void:
 	$Name.text = _default_name
-
-
-func _on_name_text_changed(new_text: String) -> void:
-	description.name = new_text
 
 
 func _on_arguments_changed() -> void:

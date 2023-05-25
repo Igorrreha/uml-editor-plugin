@@ -80,10 +80,10 @@ expand_to_text_length = true
 context_menu_enabled = false
 select_all_on_focus = true
 
-[connection signal="modifier_selected" from="AccessModifier" to="." method="_on_access_modifier_selected"]
-[connection signal="text_changed" from="Name" to="." method="_on_name_text_changed"]
+[connection signal="modifier_selected" from="AccessModifier" to="." method="set_access_modifier"]
+[connection signal="text_changed" from="Name" to="." method="set_method_name"]
 [connection signal="argument_added" from="Arguments" to="." method="add_argument"]
 [connection signal="argument_removed" from="Arguments" to="." method="remove_argument"]
 [connection signal="shortcut_handled" from="AddArgumentShortcutHandler" to="Arguments" method="add_argument"]
 [connection signal="shortcut_handled" from="DestroyShortcutHandler" to="." method="queue_free"]
-[connection signal="text_changed" from="Type" to="." method="_on_type_text_changed"]
+[connection signal="text_changed" from="Type" to="." method="set_return_type"]

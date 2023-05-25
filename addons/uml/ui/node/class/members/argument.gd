@@ -11,17 +11,17 @@ extends HBoxContainer
 @onready var name_edit: = $Name
 
 
-func _ready() -> void:
-	name_edit.text = _default_name
-	$Type.text = _default_type
-
-
-func _on_name_text_changed(new_text: String) -> void:
+func set_argument_name(new_text: String) -> void:
 	description.name = new_text
 
 
-func _on_type_text_changed(new_text: String) -> void:
+func set_argument_type(new_text: String) -> void:
 	description.type = new_text
+
+
+func _ready() -> void:
+	name_edit.text = _default_name
+	$Type.text = _default_type
 
 
 func _on_focus_exited() -> void:

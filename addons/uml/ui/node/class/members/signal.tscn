@@ -61,7 +61,7 @@ layout_mode = 2
 shortcut_context = NodePath("..")
 _shortcut = SubResource("Shortcut_otmy4")
 
-[connection signal="text_changed" from="Name" to="." method="_on_name_text_changed"]
+[connection signal="text_changed" from="Name" to="." method="set_signal_name"]
 [connection signal="argument_added" from="Arguments" to="." method="add_argument"]
 [connection signal="argument_removed" from="Arguments" to="." method="remove_argument"]
 [connection signal="shortcut_handled" from="AddArgumentShortcutHandler" to="Arguments" method="add_argument"]

@@ -44,6 +44,6 @@ shortcut_context = NodePath("..")
 _shortcut = SubResource("Shortcut_gr8er")
 
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
-[connection signal="text_changed" from="Name" to="." method="_on_name_text_changed"]
-[connection signal="text_changed" from="Type" to="." method="_on_type_text_changed"]
+[connection signal="text_changed" from="Name" to="." method="set_argument_name"]
+[connection signal="text_changed" from="Type" to="." method="set_argument_type"]
 [connection signal="shortcut_handled" from="DestroyShortcutHandler" to="." method="queue_free"]

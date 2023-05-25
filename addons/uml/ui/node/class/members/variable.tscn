@@ -41,7 +41,7 @@ item_count = 1
 item_0/text = "Remove"
 item_0/id = 0
 
-[connection signal="modifier_selected" from="AccessModifier" to="." method="_on_access_modifier_selected"]
-[connection signal="text_changed" from="Name" to="." method="_on_name_text_changed"]
-[connection signal="text_changed" from="Type" to="." method="_on_type_text_changed"]
+[connection signal="modifier_selected" from="AccessModifier" to="." method="set_access_modifier"]
+[connection signal="text_changed" from="Name" to="." method="set_variable_name"]
+[connection signal="text_changed" from="Type" to="." method="set_variable_type"]
 [connection signal="index_pressed" from="PopupMenu" to="." method="_on_popup_menu_index_pressed"]

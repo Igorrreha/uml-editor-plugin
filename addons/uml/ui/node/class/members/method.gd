@@ -21,22 +21,22 @@ func remove_argument(argument: UmlClassNode.ArgumentDescription) -> void:
 	_on_arguments_changed()
 
 
+func set_access_modifier(modifier: UmlClassNode.AccessModifier) -> void:
+	description.access_modifier = modifier
+
+
+func set_method_name(new_text: String) -> void:
+	description.name = new_text
+
+
+func set_return_type(new_text: String) -> void:
+	description.return_type = new_text
+
+
 func _ready() -> void:
 	$AccessModifier.selected = _default_access_modifier
 	$Name.text = _default_name
 	$Type.text = _default_type
-
-
-func _on_access_modifier_selected(modifier: UmlClassNode.AccessModifier) -> void:
-	description.access_modifier = modifier
-
-
-func _on_name_text_changed(new_text: String) -> void:
-	description.name = new_text
-
-
-func _on_type_text_changed(new_text: String) -> void:
-	description.return_type = new_text
 
 
 func _on_arguments_changed() -> void:
