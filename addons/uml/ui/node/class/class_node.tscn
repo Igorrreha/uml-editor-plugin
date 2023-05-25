@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cw5x16vnx08ch"]
+[gd_scene load_steps=13 format=3 uid="uid://cw5x16vnx08ch"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
@@ -21,14 +21,6 @@ events = [SubResource("InputEventKey_r4g78")]
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3mtia"]
 content_margin_left = 19.0
 
-[sub_resource type="InputEventKey" id="InputEventKey_wr3my"]
-device = -1
-shift_pressed = true
-keycode = 4194309
-
-[sub_resource type="Shortcut" id="Shortcut_a8mng"]
-events = [SubResource("InputEventKey_wr3my")]
-
 [node name="ClassNode" type="GraphNode"]
 offset_right = 203.0
 offset_bottom = 136.0
@@ -44,15 +36,6 @@ slot/0/right_type = 0
 slot/0/right_color = Color(1, 1, 1, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
-slot/1/left_enabled = false
-slot/1/left_type = 0
-slot/1/left_color = Color(1, 1, 1, 1)
-slot/1/left_icon = null
-slot/1/right_enabled = false
-slot/1/right_type = 0
-slot/1/right_color = Color(1, 1, 1, 1)
-slot/1/right_icon = null
-slot/1/draw_stylebox = true
 script = ExtResource("1_h1hxj")
 
 [node name="Members" type="VBoxContainer" parent="." node_paths=PackedStringArray("_signals_container", "_variables_container", "_methods_container", "_add_signal_button", "_add_variable_button", "_add_method_button")]
@@ -150,11 +133,7 @@ context_menu_enabled = false
 flat = true
 select_all_on_focus = true
 
-[node name="ShortcutHandler" parent="." instance=ExtResource("5_lfrqw")]
-layout_mode = 2
-_shortcut = SubResource("Shortcut_a8mng")
-
-[node name="PopupMenu" type="PopupMenu" parent="ShortcutHandler" node_paths=PackedStringArray("_class_node_members_container")]
+[node name="PopupMenu" type="PopupMenu" parent="." node_paths=PackedStringArray("_class_node_members_container")]
 handle_input_locally = false
 size = Vector2i(125, 100)
 item_count = 3
@@ -165,10 +144,10 @@ item_1/id = 1
 item_2/text = "Add signal"
 item_2/id = 2
 script = ExtResource("5_u62dd")
-_class_node_members_container = NodePath("../../Members")
+_class_node_members_container = NodePath("../Members")
 
 [connection signal="gui_input" from="." to="TitleEditor" method="_on_class_node_gui_input"]
-[connection signal="gui_input" from="." to="ShortcutHandler/PopupMenu" method="_on_class_node_gui_input"]
+[connection signal="gui_input" from="." to="PopupMenu" method="_on_class_node_gui_input"]
 [connection signal="method_added" from="Members" to="." method="add_method"]
 [connection signal="method_removed" from="Members" to="." method="remove_method"]
 [connection signal="signal_added" from="Members" to="." method="add_signal"]
@@ -182,5 +161,4 @@ _class_node_members_container = NodePath("../../Members")
 [connection signal="shortcut_handled" from="Members/Methods/ParentIgnore/AddShortcutHandler3" to="Members" method="add_method"]
 [connection signal="button_down" from="Members/Methods/Add" to="Members" method="add_method"]
 [connection signal="popup_hide" from="TitleEditor/EditClassNamePopup" to="TitleEditor" method="_on_editing_popup_hide"]
-[connection signal="shortcut_handled" from="ShortcutHandler" to="ShortcutHandler/PopupMenu" method="open"]
-[connection signal="id_pressed" from="ShortcutHandler/PopupMenu" to="ShortcutHandler/PopupMenu" method="_on_id_pressed"]
+[connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
