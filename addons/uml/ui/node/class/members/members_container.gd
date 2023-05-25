@@ -54,7 +54,7 @@ func _ready() -> void:
 	
 	_update_add_signal_button_visibility()
 	_update_add_variable_button_visibility()
-#	_update_add_method_button_visibility()
+	_update_add_method_button_visibility()
 
 
 func _on_member_added(node: Node) -> void:
@@ -68,10 +68,10 @@ func _on_member_added(node: Node) -> void:
 		node.tree_exited.connect(_on_child_exited_tree.bind(node))
 		_update_add_signal_button_visibility()
 	
-#	if node is UmlClassNodeMethod:
-#		method_added.emit(node.description)
-#		node.tree_exited.connect(_on_child_exited_tree.bind(node))
-#		_update_add_method_button_visibility()
+	if node is UmlClassNodeMethod:
+		method_added.emit(node.description)
+		node.tree_exited.connect(_on_child_exited_tree.bind(node))
+		_update_add_method_button_visibility()
 
 
 func _on_child_exited_tree(node: Node) -> void:
@@ -85,10 +85,10 @@ func _on_child_exited_tree(node: Node) -> void:
 		node.tree_exited.disconnect(_on_child_exited_tree)
 		_update_add_variable_button_visibility()
 	
-#	if node is UmlClassNodeMethod:
-#		method_removed.emit(node.description)
-#		node.tree_exited.disconnect(_on_child_exited_tree)
-#		_update_add_method_button_visibility()
+	if node is UmlClassNodeMethod:
+		method_removed.emit(node.description)
+		node.tree_exited.disconnect(_on_child_exited_tree)
+		_update_add_method_button_visibility()
 
 
 func _update_add_signal_button_visibility() -> void:
@@ -101,6 +101,6 @@ func _update_add_variable_button_visibility() -> void:
 		return child is UmlClassNodeVariable)
 
 
-#func _update_add_method_button_visibility() -> void:
-#	_add_method_button.visible = not _methods_container.get_children().any(func(child: Node):
-#		return child is UmlClassNodeMethod)
+func _update_add_method_button_visibility() -> void:
+	_add_method_button.visible = not _methods_container.get_children().any(func(child: Node):
+		return child is UmlClassNodeMethod)

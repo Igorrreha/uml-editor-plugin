@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://cw5x16vnx08ch"]
+[gd_scene load_steps=15 format=3 uid="uid://cw5x16vnx08ch"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
 [ext_resource type="PackedScene" uid="uid://bfcenl6pi37pf" path="res://addons/uml/ui/node/class/members/variable.tscn" id="2_msk3s"]
 [ext_resource type="PackedScene" uid="uid://cmddr44h3ur1e" path="res://addons/uml/ui/node/class/members/signal.tscn" id="2_xhax0"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/title_editor.gd" id="3_wq5ff"]
+[ext_resource type="PackedScene" uid="uid://8qclxa34gwdq" path="res://addons/uml/ui/node/class/members/method.tscn" id="5_5r21a"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="5_lfrqw"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="6_mwrgt"]
@@ -60,6 +61,7 @@ theme_override_constants/separation = 0
 script = ExtResource("2_gmavf")
 _tscn_signal = ExtResource("2_xhax0")
 _tscn_variable = ExtResource("2_msk3s")
+_tscn_method = ExtResource("5_5r21a")
 _signals_container = NodePath("Signals")
 _variables_container = NodePath("Variables")
 _methods_container = NodePath("Methods")
