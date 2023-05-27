@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cw5x16vnx08ch"]
+[gd_scene load_steps=16 format=3 uid="uid://cw5x16vnx08ch"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
 [ext_resource type="PackedScene" uid="uid://bfcenl6pi37pf" path="res://addons/uml/ui/node/class/members/variable.tscn" id="2_msk3s"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/class_icon.gd" id="2_ureqr"]
 [ext_resource type="PackedScene" uid="uid://cmddr44h3ur1e" path="res://addons/uml/ui/node/class/members/signal.tscn" id="2_xhax0"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/title_editor.gd" id="3_wq5ff"]
 [ext_resource type="PackedScene" uid="uid://8qclxa34gwdq" path="res://addons/uml/ui/node/class/members/method.tscn" id="5_5r21a"]
@@ -18,14 +19,26 @@ keycode = 4194309
 [sub_resource type="Shortcut" id="Shortcut_opmbj"]
 events = [SubResource("InputEventKey_r4g78")]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3mtia"]
-content_margin_left = 19.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qj28a"]
+content_margin_left = 18.0
+bg_color = Color(0.313726, 0.313726, 0.313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_um8qe"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.862745, 0.376471, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7txqx"]
 
 [node name="ClassNode" type="GraphNode"]
 offset_right = 203.0
 offset_bottom = 136.0
 mouse_force_pass_scroll_events = false
-title = "Class"
+theme = ExtResource("6_mwrgt")
+title = "Node"
 resizable = true
 slot/0/left_enabled = false
 slot/0/left_type = 0
@@ -118,20 +131,27 @@ _editing_popup = NodePath("EditClassNamePopup")
 _title_line_edit = NodePath("EditClassNamePopup/LineEdit")
 
 [node name="EditClassNamePopup" type="Popup" parent="TitleEditor"]
+transparent_bg = true
+gui_embed_subwindows = true
 size = Vector2i(100, 31)
+transparent = true
 
 [node name="LineEdit" type="LineEdit" parent="TitleEditor/EditClassNamePopup"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxEmpty_3mtia")
+offset_right = 59.0625
+offset_bottom = 23.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_qj28a")
+theme_override_styles/focus = SubResource("StyleBoxFlat_um8qe")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_7txqx")
 text = "Class"
 context_menu_enabled = false
-flat = true
 select_all_on_focus = true
+
+[node name="ClassNodeIconDrawer" type="Node" parent="." node_paths=PackedStringArray("_target")]
+script = ExtResource("2_ureqr")
+_target = NodePath("..")
+_icon_scale = Vector2(0.6, 0.6)
 
 [node name="PopupMenu" type="PopupMenu" parent="." node_paths=PackedStringArray("_class_node_members_container")]
 handle_input_locally = false
@@ -146,6 +166,7 @@ item_2/id = 1
 script = ExtResource("5_u62dd")
 _class_node_members_container = NodePath("../Members")
 
+[connection signal="draw" from="." to="ClassNodeIconDrawer" method="draw"]
 [connection signal="gui_input" from="." to="TitleEditor" method="_on_class_node_gui_input"]
 [connection signal="gui_input" from="." to="PopupMenu" method="_on_class_node_gui_input"]
 [connection signal="method_added" from="Members" to="." method="add_method"]
@@ -160,5 +181,8 @@ _class_node_members_container = NodePath("../Members")
 [connection signal="button_down" from="Members/Variables/Add" to="Members" method="add_variable"]
 [connection signal="shortcut_handled" from="Members/Methods/ParentIgnore/AddShortcutHandler3" to="Members" method="add_method"]
 [connection signal="button_down" from="Members/Methods/Add" to="Members" method="add_method"]
+[connection signal="focus_entered" from="TitleEditor/EditClassNamePopup" to="TitleEditor/EditClassNamePopup/LineEdit" method="grab_focus"]
+[connection signal="focus_entered" from="TitleEditor/EditClassNamePopup" to="ClassNodeIconDrawer" method="draw_outside"]
 [connection signal="popup_hide" from="TitleEditor/EditClassNamePopup" to="TitleEditor" method="_on_editing_popup_hide"]
+[connection signal="text_changed" from="TitleEditor/EditClassNamePopup/LineEdit" to="ClassNodeIconDrawer" method="update_icon"]
 [connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]

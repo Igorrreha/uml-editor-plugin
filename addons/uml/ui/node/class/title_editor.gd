@@ -15,8 +15,11 @@ func _on_class_node_gui_input(event: InputEvent) -> void:
 			var popup_position = _class_node.global_position
 			var popup_size = Vector2(_class_node.size.x, _class_node.HEADER_HEIGHT)
 			
+			_title_line_edit.size = popup_size
+			_title_line_edit.scale = _class_node.scale
+			
 			_title_line_edit.text = _class_node.title
-			_editing_popup.popup(Rect2(popup_position, popup_size))
+			_editing_popup.popup(Rect2(popup_position, popup_size * _class_node.scale))
 
 
 func _on_editing_popup_hide() -> void:
