@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://56an2mymekb2"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://56an2mymekb2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6b7e"]
 draw_center = false
@@ -29,6 +29,20 @@ expand_margin_left = 2.0
 expand_margin_top = 1.0
 expand_margin_right = 2.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_um8qe"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.862745, 0.376471, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qj28a"]
+content_margin_left = 18.0
+bg_color = Color(0.313726, 0.313726, 0.313726, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7txqx"]
+
 [resource]
 HBoxContainer/constants/separation = 0
 HSeparator/constants/separation = 5
@@ -45,3 +59,7 @@ OptionButton/styles/normal = SubResource("StyleBoxEmpty_hd744")
 OptionButton/styles/normal_mirrored = SubResource("StyleBoxEmpty_hd744")
 OptionButton/styles/pressed = SubResource("StyleBoxEmpty_hd744")
 OptionButton/styles/pressed_mirrored = SubResource("StyleBoxEmpty_hd744")
+UmlNodeTitleEdit/base_type = &"LineEdit"
+UmlNodeTitleEdit/styles/focus = SubResource("StyleBoxFlat_um8qe")
+UmlNodeTitleEdit/styles/normal = SubResource("StyleBoxFlat_qj28a")
+UmlNodeTitleEdit/styles/read_only = SubResource("StyleBoxEmpty_7txqx")
