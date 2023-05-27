@@ -15,6 +15,10 @@ run/main_scene="res://addons/uml/ui/uml_graph/uml_graph.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.png"
 
+[autoload]
+
+ClassIconsProvider="*res://addons/uml/autoload/class_icons_provider.gd"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/uml/plugin.cfg")
