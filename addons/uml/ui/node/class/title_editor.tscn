@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://spgentqvpdn7"]
+[gd_scene load_steps=6 format=3 uid="uid://spgentqvpdn7"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node_title_editor.gd" id="1_fjrcs"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="2_p075j"]
+[ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="3_0tag2"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_4bhi3"]
+device = -1
+shift_pressed = true
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_3xlx0"]
+events = [SubResource("InputEventKey_4bhi3")]
 
 [node name="TitleEditor" type="Node" node_paths=PackedStringArray("_editing_popup", "_edits_container", "_class_name_edit", "_parent_class_name_edit")]
 script = ExtResource("1_fjrcs")
@@ -41,7 +50,13 @@ text = "Class"
 context_menu_enabled = false
 select_all_on_focus = true
 
+[node name="ShortcutHandler" parent="EditClassNamePopup/VBoxContainer" node_paths=PackedStringArray("shortcut_context") instance=ExtResource("3_0tag2")]
+layout_mode = 2
+shortcut_context = NodePath("..")
+_shortcut = SubResource("Shortcut_3xlx0")
+
 [connection signal="focus_entered" from="EditClassNamePopup" to="EditClassNamePopup/VBoxContainer/ClassNameEdit" method="grab_focus"]
 [connection signal="popup_hide" from="EditClassNamePopup" to="." method="_on_editing_popup_hide"]
 [connection signal="text_changed" from="EditClassNamePopup/VBoxContainer/ClassNameEdit" to="." method="_on_class_name_edit_text_changed"]
 [connection signal="text_changed" from="EditClassNamePopup/VBoxContainer/ParentClassNameEdit" to="." method="_on_parent_class_name_edit_text_changed"]
+[connection signal="shortcut_handled" from="EditClassNamePopup/VBoxContainer/ShortcutHandler" to="." method="_set_current_class_as_parent"]
