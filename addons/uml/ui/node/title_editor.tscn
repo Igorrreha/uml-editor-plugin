@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3wmjhhbg5xj4"]
+
+[ext_resource type="Script" path="res://addons/uml/ui/node/title_editor.gd" id="1_xte5a"]
+[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="2_kgo0f"]
+
+[node name="TitleEditor" type="Node" node_paths=PackedStringArray("_editing_popup", "_edits_container", "_title_edit")]
+script = ExtResource("1_xte5a")
+_editing_popup = NodePath("EditClassNamePopup")
+_edits_container = NodePath("EditClassNamePopup/VBoxContainer")
+_title_edit = NodePath("EditClassNamePopup/VBoxContainer/TitleEdit")
+
+[node name="EditClassNamePopup" type="Popup" parent="."]
+transparent_bg = true
+gui_embed_subwindows = true
+size = Vector2i(100, 50)
+transparent = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EditClassNamePopup"]
+offset_right = 18.0
+offset_bottom = 50.0
+theme = ExtResource("2_kgo0f")
+
+[node name="TitleEdit" type="LineEdit" parent="EditClassNamePopup/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_kgo0f")
+theme_type_variation = &"UmlNodeTitleEdit"
+text = "Class"
+context_menu_enabled = false
+select_all_on_focus = true
+
+[connection signal="focus_entered" from="EditClassNamePopup" to="EditClassNamePopup/VBoxContainer/TitleEdit" method="grab_focus"]
+[connection signal="popup_hide" from="EditClassNamePopup" to="." method="_on_editing_popup_hide"]
+[connection signal="text_changed" from="EditClassNamePopup/VBoxContainer/TitleEdit" to="." method="_on_title_edit_text_changed"]

@@ -41,7 +41,9 @@ border_color = Color(0.862745, 0.376471, 0, 1)
 content_margin_left = 18.0
 bg_color = Color(0.313726, 0.313726, 0.313726, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7txqx"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v32yc"]
+content_margin_left = 18.0
+bg_color = Color(0.313726, 0.313726, 0.313726, 1)
 
 [resource]
 HBoxContainer/constants/separation = 0
@@ -62,4 +64,5 @@ OptionButton/styles/pressed_mirrored = SubResource("StyleBoxEmpty_hd744")
 UmlNodeTitleEdit/base_type = &"LineEdit"
 UmlNodeTitleEdit/styles/focus = SubResource("StyleBoxFlat_um8qe")
 UmlNodeTitleEdit/styles/normal = SubResource("StyleBoxFlat_qj28a")
-UmlNodeTitleEdit/styles/read_only = SubResource("StyleBoxEmpty_7txqx")
+UmlNodeTitleEdit/styles/read_only = SubResource("StyleBoxFlat_v32yc")
+VBoxContainer/constants/separation = 0
