@@ -2,6 +2,7 @@ extends Node
 
 
 @export var _graph: UmlGraph
+@export var _connections_manager: UmlNodesConnectionsManager
 
 @export var connections_settings: Array[UmlConnectionSettings]
 
@@ -20,7 +21,7 @@ extends Node
 
 
 func on_graph_draw() -> void:
-	var connections = _graph.get_connections()
+	var connections = _connections_manager.get_connections()
 	var zoom = _graph.zoom
 	var line_width = _line_width * zoom
 	var line_dash = _line_dash * zoom
