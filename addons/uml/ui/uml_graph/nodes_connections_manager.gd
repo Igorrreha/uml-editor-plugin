@@ -6,15 +6,23 @@ signal connections_updated()
 
 @export var _selected_nodes_provider: UmlSelectedNodesProvider
 
-var _connections: Array[UmlConnection] = []
+var _connections: Dictionary #[UmlNode, Dictionary[UmlNode, UmlConnection]]
 
 
 func get_connections() -> Array[UmlConnection]:
-	return _connections
+	var connections: Array[UmlConnection]
+	for group in _connections.values():
+		connections.append_array(group.values())
+	
+	connections.make_read_only()
+	return connections
 
 
 func _connect(node_a: UmlNode, node_b: UmlNode, connection_type: UmlConnection.Type) -> void:
-	_connections.append(UmlConnection.new(node_a, node_b, connection_type))
+	if not _connections.has(node_a):
+		_connections[node_a] = {}
+	
+	_connections[node_a][node_b] = UmlConnection.new(node_a, node_b, connection_type)
 	connections_updated.emit()
 
 
