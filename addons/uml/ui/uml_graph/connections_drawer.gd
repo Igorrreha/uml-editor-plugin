@@ -6,6 +6,9 @@ extends Node
 
 @export var connections_settings: Array[UmlConnectionSettings]
 
+@export_group("Offset")
+@export var _cross_connection_offset: Vector2
+
 @export_group("Line")
 @export var _line_width: float
 @export var _line_dash: float
@@ -26,9 +29,15 @@ func on_graph_draw() -> void:
 	var line_width = _line_width * zoom
 	var line_dash = _line_dash * zoom
 	
+	var processed_connections = {}
+	
 	for connection in connections:
 		var node_a = connection.node_a as UmlNode
+		if not processed_connections.has(node_a):
+			processed_connections[node_a] = {}
+		
 		var node_b = connection.node_b as UmlNode
+		
 		var point_a = node_a.position + node_a.size / 2 * zoom
 		var point_b = node_b.position + node_b.size / 2 * zoom
 		
