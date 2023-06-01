@@ -6,6 +6,9 @@ extends Node
 
 @export var connections_settings: Array[UmlConnectionSettings]
 
+@export_group("Offset")
+@export var _cross_connection_offset: float
+
 @export_group("Line")
 @export var _line_width: float
 @export var _line_dash: float
@@ -26,17 +29,26 @@ func on_graph_draw() -> void:
 	var line_width = _line_width * zoom
 	var line_dash = _line_dash * zoom
 	
+	var cross_connections = _connections_manager.get_cross_connections()
+	
 	for connection in connections:
 		var node_a = connection.node_a as UmlNode
 		var node_b = connection.node_b as UmlNode
+		
 		var point_a = node_a.position + node_a.size / 2 * zoom
 		var point_b = node_b.position + node_b.size / 2 * zoom
 		
 		var delta = point_b - point_a
 		var delta_angle = delta.angle()
 		
-		point_a += _get_point_on_rect(node_a.get_rect(), delta_angle)
-		point_b -= _get_point_on_rect(node_b.get_rect(), delta_angle)
+		var offset = Vector2.ZERO
+		if cross_connections.has(connection):
+			offset = (delta.normalized().rotated(PI/2) * _cross_connection_offset)
+		
+		point_a += _get_contact_with_offsetted_center_ray_position(node_a.get_rect(),
+			delta_angle, offset)
+		point_b -= _get_contact_with_offsetted_center_ray_position(node_b.get_rect(),
+			delta_angle, -offset)
 		_draw_connection(connection.type, point_a, point_b, _line_color, line_width, line_dash)
 
 
@@ -71,7 +83,26 @@ func _draw_connection(type: UmlConnection.Type, from: Vector2, to: Vector2,
 			_draw_diamond_head(to, delta_angle, _graph.zoom, true)
 
 
-func _get_point_on_rect(rect: Rect2, angle: float) -> Vector2:
+func _get_contact_with_offsetted_center_ray_position(rect: Rect2, angle: float,
+		center_offset: Vector2) -> Vector2:
+	if center_offset.length() > 0:
+		var angle_vector = Vector2.from_angle(angle)
+		var center = rect.size / 2
+		
+		var direction_multiplyer = Vector2(1 if angle_vector.x > 0 else -1,
+			1 if angle_vector.y > 0 else -1)
+		
+		var sub_rect = Rect2(Vector2.ZERO, rect.size - center_offset
+			* direction_multiplyer * 2)
+		var offset_delta = _get_contact_with_center_ray_position(sub_rect, angle)
+		return center_offset + offset_delta
+	else:
+		return _get_contact_with_center_ray_position(rect, angle)
+	
+	return Vector2.ZERO
+
+
+func _get_contact_with_center_ray_position(rect: Rect2, angle: float) -> Vector2:
 	var angle_vector = Vector2.from_angle(angle)
 	var center = rect.size / 2
 	
