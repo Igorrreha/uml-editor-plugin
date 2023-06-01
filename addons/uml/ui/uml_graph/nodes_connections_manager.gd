@@ -4,18 +4,55 @@ extends Node
 
 signal connections_updated()
 
+
 @export var _selected_nodes_provider: UmlSelectedNodesProvider
 
-var _connections: Dictionary #[UmlNode, Dictionary[UmlNode, UmlConnection]]
+var _connections: Dictionary: #[UmlNode, Dictionary[UmlNode, UmlConnection]]
+	set(v):
+		_connections_list_is_actual = false
+		_cross_connections_is_actual = false
+		_connections = v
+
+var _connections_list: Array[UmlConnection]
+var _connections_list_is_actual: bool
+
+var _cross_connections: Array[UmlConnection]
+var _cross_connections_is_actual: bool
 
 
 func get_connections() -> Array[UmlConnection]:
-	var connections: Array[UmlConnection]
-	for group in _connections.values():
-		connections.append_array(group.values())
+	if not _connections_list_is_actual:
+		_actualize_connections_list()
+		_connections_list_is_actual = true
 	
-	connections.make_read_only()
-	return connections
+	return _connections_list
+
+
+func get_cross_connections() -> Array[UmlConnection]:
+	if not _cross_connections_is_actual:
+		_actualize_cross_connections()
+		_cross_connections_is_actual = true
+	
+	return _cross_connections
+
+
+func _actualize_connections_list() -> void:
+	_connections_list = []
+	for group in _connections.values():
+		_connections_list.append_array(group.values())
+	
+	_connections_list.make_read_only()
+
+
+func _actualize_cross_connections() -> void:
+	_cross_connections = []
+	for node_from in _connections:
+		for node_to in _connections[node_from]:
+			if (_connections.has(node_to)
+			and _connections[node_to].has(node_from)):
+				_cross_connections.append(_connections[node_from][node_to])
+	
+	_cross_connections.make_read_only()
 
 
 func get_cross_connections() -> Array[UmlConnection]:
@@ -35,6 +72,9 @@ func _connect(node_a: UmlNode, node_b: UmlNode, connection_type: UmlConnection.T
 		_connections[node_a] = {}
 	
 	_connections[node_a][node_b] = UmlConnection.new(node_a, node_b, connection_type)
+	
+	_connections_list_is_actual = false
+	_cross_connections_is_actual = false
 	connections_updated.emit()
 
 
