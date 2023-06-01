@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://spgentqvpdn7"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node_title_editor.gd" id="1_fjrcs"]
-[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="2_p075j"]
+[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="2_p075j"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="3_0tag2"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_4bhi3"]

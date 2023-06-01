@@ -1,10 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cmddr44h3ur1e"]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/signal.gd" id="1_lljek"]
-[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="3_1huy4"]
+[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="3_1huy4"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/arguments_container.gd" id="3_jacx8"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="3_v725n"]
-[ext_resource type="PackedScene" uid="uid://v1iw3tpcfdct" path="res://addons/uml/ui/node/class/members/argument.tscn" id="4_wm4qk"]
+[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/members/argument.tscn" id="4_wm4qk"]
 [ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/members/arguments_divider.tscn" id="5_own27"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_rq4u3"]

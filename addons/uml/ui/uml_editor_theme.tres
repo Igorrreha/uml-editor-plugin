@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://56an2mymekb2"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://56an2mymekb2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6b7e"]
 draw_center = false
@@ -13,6 +13,36 @@ expand_margin_top = 1.0
 expand_margin_right = 2.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yt7at"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3q4un"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_620wk"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.862745, 0.376471, 0, 1)
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_top = 1.0
+expand_margin_right = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8gk6"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.862745, 0.376471, 0, 1)
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_top = 1.0
+expand_margin_right = 2.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hd744"]
 content_margin_right = 2.0
@@ -52,6 +82,11 @@ LineEdit/constants/minimum_character_width = 0
 LineEdit/styles/focus = SubResource("StyleBoxFlat_k6b7e")
 LineEdit/styles/normal = SubResource("StyleBoxEmpty_yt7at")
 LineEdit/styles/read_only = SubResource("StyleBoxEmpty_yt7at")
+MenuButton/styles/disabled = SubResource("StyleBoxEmpty_3q4un")
+MenuButton/styles/focus = SubResource("StyleBoxFlat_620wk")
+MenuButton/styles/hover = SubResource("StyleBoxEmpty_3q4un")
+MenuButton/styles/normal = SubResource("StyleBoxEmpty_3q4un")
+MenuButton/styles/pressed = SubResource("StyleBoxFlat_t8gk6")
 OptionButton/styles/disabled = SubResource("StyleBoxEmpty_hd744")
 OptionButton/styles/disabled_mirrored = SubResource("StyleBoxEmpty_hd744")
 OptionButton/styles/focus = SubResource("StyleBoxFlat_c8udi")

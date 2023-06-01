@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsl66ddhk0jtw"]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/node/uml_node_theme.tres" id="1_pajx1"]
+[ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="1_pajx1"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/access_modifier.gd" id="1_qdwma"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_5bbd0"]
