@@ -18,6 +18,18 @@ func get_connections() -> Array[UmlConnection]:
 	return connections
 
 
+func get_cross_connections() -> Array[UmlConnection]:
+	var cross_connections: Array[UmlConnection]
+	for node_from in _connections:
+		for node_to in _connections[node_from]:
+			if (_connections.has(node_to)
+			and _connections[node_to].has(node_from)):
+				cross_connections.append(_connections[node_from][node_to])
+	
+	cross_connections.make_read_only()
+	return cross_connections
+
+
 func _connect(node_a: UmlNode, node_b: UmlNode, connection_type: UmlConnection.Type) -> void:
 	if not _connections.has(node_a):
 		_connections[node_a] = {}

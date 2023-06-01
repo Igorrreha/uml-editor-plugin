@@ -90,6 +90,7 @@ script = ExtResource("2_gunas")
 _graph = NodePath("..")
 _connections_manager = NodePath("../NodesConnectionsManager")
 connections_settings = Array[ExtResource("3_8tugd")]([SubResource("Resource_rildy"), SubResource("Resource_cu3wr"), SubResource("Resource_kxwm4"), SubResource("Resource_r38ym"), SubResource("Resource_in6ra"), SubResource("Resource_5qwfi"), SubResource("Resource_tumv8")])
+_cross_connection_offset = 10.0
 _line_width = 3.0
 _line_dash = 6.0
 _line_color = Color(0.862745, 0.376471, 0, 1)
