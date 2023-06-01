@@ -1,12 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://l7bjlomkddyt"]
+[gd_scene load_steps=23 format=3 uid="uid://cn76q8gvjl4xw"]
 
-[ext_resource type="Script" path="res://addons/uml/ui/command_panel/select_connection_type_menu.gd" id="1_38wa0"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="1_r3dmh"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_graph.gd" id="1_xfq3s"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/connections_drawer.gd" id="2_gunas"]
+[ext_resource type="Script" path="res://addons/uml/ui/command_panel/connection_type_menu.gd" id="2_idlaq"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_editor_popup_menu.gd" id="2_sk26r"]
 [ext_resource type="Script" path="res://addons/uml/ui/connection/uml_connection_settings.gd" id="3_8tugd"]
 [ext_resource type="Script" path="res://addons/uml/ui/nodes_creator.gd" id="3_wxkrg"]
+[ext_resource type="Script" path="res://addons/uml/ui/command_panel/connections_removing_type_menu.gd" id="3_y7i5y"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/selected_nodes_provider.gd" id="4_y35pc"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/nodes_connections_manager.gd" id="5_u7p5t"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/class_node.tscn" id="6_ga474"]
@@ -18,6 +19,14 @@ keycode = 49
 
 [sub_resource type="Shortcut" id="Shortcut_xkd6c"]
 events = [SubResource("InputEventKey_dvg8j")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_akdj8"]
+device = -1
+ctrl_pressed = true
+keycode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_coh88"]
+events = [SubResource("InputEventKey_akdj8")]
 
 [sub_resource type="Resource" id="Resource_rildy"]
 resource_name = "ASSOCIATION"
@@ -99,19 +108,24 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CommandPanel"]
 layout_mode = 2
 
-[node name="SelectConnectionTypeMenu" type="MenuButton" parent="VBoxContainer/CommandPanel/HBoxContainer"]
+[node name="ConnectionTypeMenu" type="MenuButton" parent="VBoxContainer/CommandPanel/HBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_r3dmh")
 shortcut = SubResource("Shortcut_xkd6c")
 text = "Connect"
 flat = false
-script = ExtResource("1_38wa0")
+script = ExtResource("2_idlaq")
+
+[node name="ConnectionsRemovingTypeMenu" type="MenuButton" parent="VBoxContainer/CommandPanel/HBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_coh88")
+text = "Disconnect"
+flat = false
+script = ExtResource("3_y7i5y")
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer" node_paths=PackedStringArray("_popup_menu")]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_force_pass_scroll_events = false
-scroll_offset = Vector2(0, -8)
 use_snap = false
 script = ExtResource("1_xfq3s")
 _popup_menu = NodePath("../../PopupMenu")
@@ -149,7 +163,8 @@ script = ExtResource("3_wxkrg")
 _tscn_class_node = ExtResource("6_ga474")
 _container = NodePath("../VBoxContainer/GraphEdit")
 
-[connection signal="connection_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/SelectConnectionTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="connect_selected_nodes"]
+[connection signal="connection_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/ConnectionTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="connect_selected_nodes"]
+[connection signal="removing_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/ConnectionsRemovingTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="remove_selected_connections"]
 [connection signal="draw" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/ConnectionsDrawer" method="on_graph_draw"]
 [connection signal="node_deselected" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/NodesSelectionManager" method="on_graph_edit_node_deselected"]
 [connection signal="node_selected" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/NodesSelectionManager" method="on_graph_edit_node_selected"]

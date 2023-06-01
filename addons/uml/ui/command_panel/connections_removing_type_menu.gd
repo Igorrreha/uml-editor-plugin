@@ -1,7 +1,7 @@
 extends MenuButton
 
 
-signal connection_type_selected(type: UmlConnection.Type)
+signal removing_type_selected(type: UmlNodesConnectionsManager.ConnectionsRemovingType)
 
 @onready var _popup: = get_popup()
 
@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func _create_popup_items() -> void:
 	var idx = -1
-	for connection in UmlConnection.Type:
+	for connection in UmlNodesConnectionsManager.ConnectionsRemovingType:
 		idx += 1
 		_popup.add_item(connection)
 		
@@ -26,13 +26,12 @@ func _create_popup_items() -> void:
 		
 		var shortcut = Shortcut.new()
 		shortcut.events.append(shortcut_event)
-		print(shortcut.has_valid_event())
 		_popup.set_item_shortcut(idx, shortcut)
 		shortcut_feedback
 
 
 func _on_popup_window_idx_pressed(idx: int) -> void:
-	connection_type_selected.emit(idx)
+	removing_type_selected.emit(idx)
 
 
 func _on_popup_window_input(event: InputEvent) -> void:
