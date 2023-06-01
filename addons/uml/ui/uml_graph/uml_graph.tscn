@@ -1,6 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://8ronaxe0owb7"]
+[gd_scene load_steps=19 format=3 uid="uid://l7bjlomkddyt"]
 
-[ext_resource type="Script" path="res://addons/uml/ui/toolbar/connect_menu.gd" id="1_gv58h"]
+[ext_resource type="Script" path="res://addons/uml/ui/command_panel/select_connection_type_menu.gd" id="1_38wa0"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_graph.gd" id="1_xfq3s"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/connections_drawer.gd" id="2_gunas"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_editor_popup_menu.gd" id="2_sk26r"]
@@ -90,23 +90,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CommandsPanel" type="PanelContainer" parent="VBoxContainer"]
+[node name="CommandPanel" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CommandsPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CommandPanel"]
 layout_mode = 2
 
-[node name="Connect" type="MenuButton" parent="VBoxContainer/CommandsPanel/HBoxContainer"]
+[node name="SelectConnectionTypeMenu" type="MenuButton" parent="VBoxContainer/CommandPanel/HBoxContainer"]
 layout_mode = 2
 shortcut = SubResource("Shortcut_xkd6c")
 text = "Connect"
-script = ExtResource("1_gv58h")
+script = ExtResource("1_38wa0")
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer" node_paths=PackedStringArray("_popup_menu")]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_force_pass_scroll_events = false
-scroll_offset = Vector2(-40, -324)
 use_snap = false
 script = ExtResource("1_xfq3s")
 _popup_menu = NodePath("../../PopupMenu")
@@ -144,6 +143,7 @@ script = ExtResource("3_wxkrg")
 _tscn_class_node = ExtResource("6_ga474")
 _container = NodePath("../VBoxContainer/GraphEdit")
 
+[connection signal="connection_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/SelectConnectionTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="connect_selected_nodes"]
 [connection signal="draw" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/ConnectionsDrawer" method="on_graph_draw"]
 [connection signal="node_deselected" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/NodesSelectionManager" method="on_graph_edit_node_deselected"]
 [connection signal="node_selected" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/NodesSelectionManager" method="on_graph_edit_node_selected"]
