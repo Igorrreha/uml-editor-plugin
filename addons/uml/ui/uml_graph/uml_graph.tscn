@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://8ronaxe0owb7"]
+[gd_scene load_steps=19 format=3 uid="uid://8ronaxe0owb7"]
 
+[ext_resource type="Script" path="res://addons/uml/ui/toolbar/connect_menu.gd" id="1_gv58h"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_graph.gd" id="1_xfq3s"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/connections_drawer.gd" id="2_gunas"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_editor_popup_menu.gd" id="2_sk26r"]
@@ -8,6 +9,14 @@
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/selected_nodes_provider.gd" id="4_y35pc"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/nodes_connections_manager.gd" id="5_u7p5t"]
 [ext_resource type="PackedScene" uid="uid://crgosmwe2sqxr" path="res://addons/uml/ui/node/class/class_node.tscn" id="6_ga474"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_dvg8j"]
+device = -1
+ctrl_pressed = true
+keycode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_xkd6c"]
+events = [SubResource("InputEventKey_dvg8j")]
 
 [sub_resource type="Resource" id="Resource_rildy"]
 resource_name = "ASSOCIATION"
@@ -73,19 +82,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GraphEdit" type="GraphEdit" parent="." node_paths=PackedStringArray("_popup_menu")]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CommandsPanel" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CommandsPanel"]
+layout_mode = 2
+
+[node name="Connect" type="MenuButton" parent="VBoxContainer/CommandsPanel/HBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_xkd6c")
+text = "Connect"
+script = ExtResource("1_gv58h")
+
+[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer" node_paths=PackedStringArray("_popup_menu")]
+layout_mode = 2
+size_flags_vertical = 3
 mouse_force_pass_scroll_events = false
+scroll_offset = Vector2(-40, -324)
 use_snap = false
 script = ExtResource("1_xfq3s")
-_popup_menu = NodePath("../PopupMenu")
+_popup_menu = NodePath("../../PopupMenu")
 
-[node name="ConnectionsDrawer" type="Node" parent="GraphEdit" node_paths=PackedStringArray("_graph", "_connections_manager")]
+[node name="ConnectionsDrawer" type="Node" parent="VBoxContainer/GraphEdit" node_paths=PackedStringArray("_graph", "_connections_manager")]
 script = ExtResource("2_gunas")
 _graph = NodePath("..")
 _connections_manager = NodePath("../NodesConnectionsManager")
@@ -99,11 +125,11 @@ _arrow_length = 20.0
 _diamond_angle_degrees = 60.0
 _diamond_length = 30.0
 
-[node name="NodesSelectionManager" type="Node" parent="GraphEdit" node_paths=PackedStringArray("_graph")]
+[node name="NodesSelectionManager" type="Node" parent="VBoxContainer/GraphEdit" node_paths=PackedStringArray("_graph")]
 script = ExtResource("4_y35pc")
 _graph = NodePath("..")
 
-[node name="NodesConnectionsManager" type="Node" parent="GraphEdit" node_paths=PackedStringArray("_selected_nodes_provider")]
+[node name="NodesConnectionsManager" type="Node" parent="VBoxContainer/GraphEdit" node_paths=PackedStringArray("_selected_nodes_provider")]
 script = ExtResource("5_u7p5t")
 _selected_nodes_provider = NodePath("../NodesSelectionManager")
 
@@ -116,12 +142,12 @@ script = ExtResource("2_sk26r")
 [node name="NodesCreator" type="Node" parent="." node_paths=PackedStringArray("_container")]
 script = ExtResource("3_wxkrg")
 _tscn_class_node = ExtResource("6_ga474")
-_container = NodePath("../GraphEdit")
+_container = NodePath("../VBoxContainer/GraphEdit")
 
-[connection signal="draw" from="GraphEdit" to="GraphEdit/ConnectionsDrawer" method="on_graph_draw"]
-[connection signal="node_deselected" from="GraphEdit" to="GraphEdit/NodesSelectionManager" method="on_graph_edit_node_deselected"]
-[connection signal="node_selected" from="GraphEdit" to="GraphEdit/NodesSelectionManager" method="on_graph_edit_node_selected"]
-[connection signal="popup_request" from="GraphEdit" to="GraphEdit" method="_on_popup_request"]
-[connection signal="connections_updated" from="GraphEdit/NodesConnectionsManager" to="GraphEdit" method="queue_redraw"]
+[connection signal="draw" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/ConnectionsDrawer" method="on_graph_draw"]
+[connection signal="node_deselected" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/NodesSelectionManager" method="on_graph_edit_node_deselected"]
+[connection signal="node_selected" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/NodesSelectionManager" method="on_graph_edit_node_selected"]
+[connection signal="popup_request" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit" method="_on_popup_request"]
+[connection signal="connections_updated" from="VBoxContainer/GraphEdit/NodesConnectionsManager" to="VBoxContainer/GraphEdit" method="queue_redraw"]
 [connection signal="class_node_creation_requested" from="PopupMenu" to="NodesCreator" method="create_class_node"]
 [connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
