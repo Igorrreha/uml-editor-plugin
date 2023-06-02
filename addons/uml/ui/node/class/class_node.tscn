@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=13 format=3 uid="uid://bku15xxmcg4f3"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
@@ -162,6 +162,7 @@ _class_node_members_container = NodePath("../Members")
 [connection signal="draw" from="." to="ClassNodeIconDrawer" method="queue_redraw"]
 [connection signal="draw" from="." to="ParentClassNodeIconDrawer" method="queue_redraw"]
 [connection signal="gui_input" from="." to="TitleEditor" method="on_target_node_gui_input"]
+[connection signal="gui_input" from="." to="PopupMenu" method="on_class_node_gui_input"]
 [connection signal="method_added" from="Members" to="." method="add_method"]
 [connection signal="method_removed" from="Members" to="." method="remove_method"]
 [connection signal="signal_added" from="Members" to="." method="add_signal"]

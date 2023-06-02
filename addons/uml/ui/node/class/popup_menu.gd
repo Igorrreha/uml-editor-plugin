@@ -14,7 +14,7 @@ func _on_id_pressed(id: int) -> void:
 			_class_node_members_container.add_signal()
 
 
-func _on_class_node_gui_input(event: InputEvent) -> void:
+func on_class_node_gui_input(event: InputEvent) -> void:
 	if (event is InputEventMouseButton
 	and event.button_index == MOUSE_BUTTON_RIGHT
 	and event.is_pressed()):
