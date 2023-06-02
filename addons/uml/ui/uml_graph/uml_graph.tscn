@@ -158,10 +158,10 @@ item_0/text = "Create class"
 item_0/id = 0
 script = ExtResource("2_sk26r")
 
-[node name="NodesCreator" type="Node" parent="." node_paths=PackedStringArray("_container")]
+[node name="NodesCreator" type="Node" parent="." node_paths=PackedStringArray("_graph")]
 script = ExtResource("3_wxkrg")
 _tscn_class_node = ExtResource("6_ga474")
-_container = NodePath("../VBoxContainer/GraphEdit")
+_graph = NodePath("../VBoxContainer/GraphEdit")
 
 [connection signal="connection_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/ConnectionTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="connect_selected_nodes"]
 [connection signal="removing_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/ConnectionsRemovingTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="remove_selected_connections"]
