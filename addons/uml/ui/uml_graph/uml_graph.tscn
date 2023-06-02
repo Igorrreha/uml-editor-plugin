@@ -114,6 +114,7 @@ shortcut = SubResource("Shortcut_xkd6c")
 text = "Connect"
 flat = false
 script = ExtResource("2_idlaq")
+_items_priority = Array[int]([6, 4])
 
 [node name="ConnectionsRemovingTypeMenu" type="MenuButton" parent="VBoxContainer/CommandPanel/HBoxContainer"]
 layout_mode = 2
