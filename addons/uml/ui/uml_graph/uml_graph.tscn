@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cn76q8gvjl4xw"]
+[gd_scene load_steps=25 format=3 uid="uid://cugsl3qnfu6x2"]
 
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="1_r3dmh"]
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/uml_graph.gd" id="1_xfq3s"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://addons/uml/ui/uml_graph/nodes_connections_manager.gd" id="5_u7p5t"]
 [ext_resource type="PackedScene" uid="uid://bku15xxmcg4f3" path="res://addons/uml/ui/node/class/class_node.tscn" id="6_ga474"]
 [ext_resource type="Script" path="res://addons/uml/ui/nodes_remover.gd" id="12_q7yrk"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/saver.gd" id="13_68mkq"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_dvg8j"]
 device = -1
@@ -155,7 +156,7 @@ script = ExtResource("5_u7p5t")
 _selected_nodes_provider = NodePath("../SelectedNodesProvider")
 
 [node name="PopupMenu" type="PopupMenu" parent="." node_paths=PackedStringArray("_selected_nodes_provider")]
-item_count = 3
+item_count = 4
 item_0/text = "Create class"
 item_0/id = 0
 item_1/text = "Selection"
@@ -163,6 +164,8 @@ item_1/id = 1
 item_1/separator = true
 item_2/text = "Remove nodes"
 item_2/id = 2
+item_3/text = "Save nodes"
+item_3/id = 3
 script = ExtResource("2_sk26r")
 _selected_nodes_provider = NodePath("../VBoxContainer/GraphEdit/SelectedNodesProvider")
 
@@ -175,6 +178,11 @@ _graph = NodePath("../../VBoxContainer/GraphEdit")
 script = ExtResource("12_q7yrk")
 _selected_nodes_provider = NodePath("../../VBoxContainer/GraphEdit/SelectedNodesProvider")
 
+[node name="NodesSaver" type="Node" parent="PopupMenu" node_paths=PackedStringArray("_selected_nodes_provider")]
+script = ExtResource("13_68mkq")
+_selected_nodes_provider = NodePath("../../VBoxContainer/GraphEdit/SelectedNodesProvider")
+_save_directory = "res://addons/uml/save/graph"
+
 [connection signal="connection_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/ConnectionTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="connect_selected_nodes"]
 [connection signal="removing_type_selected" from="VBoxContainer/CommandPanel/HBoxContainer/ConnectionsRemovingTypeMenu" to="VBoxContainer/GraphEdit/NodesConnectionsManager" method="remove_selected_connections"]
 [connection signal="draw" from="VBoxContainer/GraphEdit" to="VBoxContainer/GraphEdit/ConnectionsDrawer" method="on_graph_draw"]
@@ -186,3 +194,4 @@ _selected_nodes_provider = NodePath("../../VBoxContainer/GraphEdit/SelectedNodes
 [connection signal="class_node_creation_requested" from="PopupMenu" to="PopupMenu/NodesCreator" method="create_class_node"]
 [connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
 [connection signal="selected_class_nodes_removing_requested" from="PopupMenu" to="PopupMenu/NodesRemover" method="remove_selected_nodes"]
+[connection signal="selected_nodes_saving_requested" from="PopupMenu" to="PopupMenu/NodesSaver" method="save"]

@@ -9,10 +9,27 @@ enum AccessModifier {
 
 
 var _node_class_name: String = "Class"
+var _parent_class_name: String = "Object"
 
 var _signals: Array[SignalDescription]
 var _variables: Array[VariableDescription]
 var _methods: Array[MethodDescription]
+
+
+func get_node_class_name() -> String:
+	return _node_class_name
+
+func get_parent_class_name() -> String:
+	return _parent_class_name
+
+func get_signals() -> Array[SignalDescription]:
+	return _signals
+
+func get_variables() -> Array[VariableDescription]:
+	return _variables
+
+func get_methods() -> Array[MethodDescription]:
+	return _methods
 
 
 func add_signal(description: SignalDescription) -> void:
