@@ -149,13 +149,18 @@ _icon_scale = Vector2(0.6, 0.6)
 [node name="PopupMenu" type="PopupMenu" parent="." node_paths=PackedStringArray("_class_node_members_container")]
 handle_input_locally = false
 size = Vector2i(125, 100)
-item_count = 3
+item_count = 5
 item_0/text = "Add signal"
 item_0/id = 2
 item_1/text = "Add variable"
 item_1/id = 0
 item_2/text = "Add method"
 item_2/id = 1
+item_3/text = ""
+item_3/id = 3
+item_3/separator = true
+item_4/text = "Remove node"
+item_4/id = 4
 script = ExtResource("5_u62dd")
 _class_node_members_container = NodePath("../Members")
 
@@ -181,3 +186,4 @@ _class_node_members_container = NodePath("../Members")
 [connection signal="parent_class_name_edit_text_changed" from="TitleEditor" to="ParentClassNodeIconDrawer" method="update_icon"]
 [connection signal="icon_updated" from="ParentClassNodeIconDrawer" to="ClassNodeIconDrawer" method="set_fallback_icon"]
 [connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
+[connection signal="remove_node_item_pressed" from="PopupMenu" to="." method="queue_free"]

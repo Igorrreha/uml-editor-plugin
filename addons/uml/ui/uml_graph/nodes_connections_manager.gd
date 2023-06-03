@@ -148,6 +148,9 @@ func _connect(node_a: UmlNode, node_b: UmlNode, connection_type: UmlConnection.T
 	
 	_connections[node_a][node_b] = UmlConnection.new(node_a, node_b, connection_type)
 	
+	_connect_dependent_node_signals(node_a)
+	_connect_dependent_node_signals(node_b)
+	
 	_connections_list_is_actual = false
 	_cross_connections_is_actual = false
 	connections_updated.emit()
@@ -159,3 +162,27 @@ func _connect_chain(chain: Array[UmlNode], connection_type: UmlConnection.Type) 
 		if prev_node:
 			_connect(prev_node, node, connection_type)
 		prev_node = node
+
+
+func _connect_dependent_node_signals(node: UmlClassNode) -> void:
+	if not node.tree_exiting.is_connected(_on_node_removed):
+		node.tree_exiting.connect(_on_node_removed.bind(node))
+
+
+func _disconnect_dependent_node_signals(node: UmlClassNode) -> void:
+	if node.tree_exiting.is_connected(_on_node_removed):
+		node.tree_exiting.disconnect(_on_node_removed)
+
+
+func _on_node_removed(node: UmlClassNode) -> void:
+	_connections.erase(node)
+	
+	for node_from in _connections:
+		_connections[node_from].erase(node)
+	
+	_disconnect_dependent_node_signals(node)
+	
+	_connections_list_is_actual = false
+	_cross_connections_is_actual = false
+	_connections_list = []
+	_cross_connections = []

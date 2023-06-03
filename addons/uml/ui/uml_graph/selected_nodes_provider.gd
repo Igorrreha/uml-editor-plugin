@@ -14,7 +14,15 @@ func provide() -> Array[UmlNode]:
 
 func on_graph_edit_node_selected(node: UmlNode) -> void:
 	_selected_nodes.append(node)
+	if not node.tree_exiting.is_connected(_on_node_exiting_tree):
+		node.tree_exiting.connect(_on_node_exiting_tree.bind(node))
 
 
 func on_graph_edit_node_deselected(node: UmlNode) -> void:
+	_selected_nodes.erase(node)
+	if node.tree_exiting.is_connected(_on_node_exiting_tree):
+		node.tree_exiting.disconnect(_on_node_exiting_tree)
+
+
+func _on_node_exiting_tree(node: UmlNode) -> void:
 	_selected_nodes.erase(node)
