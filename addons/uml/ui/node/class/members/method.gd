@@ -2,26 +2,26 @@ class_name UmlClassNodeMethod
 extends HBoxContainer
 
 
-@export var _default_access_modifier: UmlClassNode.AccessModifier
+@export var _default_access_modifier: Uml.ClassMemberAccessModifier
 @export var _default_name: String
 @export var _default_type: String
-var _arguments: Array[UmlClassNode.ArgumentDescription]
+var _arguments: Array[UmlArgumentDescription]
 
-@onready var description: = UmlClassNode.MethodDescription.new(_default_access_modifier,
+@onready var description: = UmlMethodDescription.new(_default_access_modifier,
 		_default_name, _default_type, _arguments)
 
 
-func add_argument(argument: UmlClassNode.ArgumentDescription) -> void:
+func add_argument(argument: UmlArgumentDescription) -> void:
 	_arguments.append(argument)
 	_on_arguments_changed()
 
 
-func remove_argument(argument: UmlClassNode.ArgumentDescription) -> void:
+func remove_argument(argument: UmlArgumentDescription) -> void:
 	_arguments.remove_at(_arguments.find(argument))
 	_on_arguments_changed()
 
 
-func set_access_modifier(modifier: UmlClassNode.AccessModifier) -> void:
+func set_access_modifier(modifier: Uml.ClassMemberAccessModifier) -> void:
 	description.access_modifier = modifier
 
 

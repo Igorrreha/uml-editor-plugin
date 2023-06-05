@@ -2,13 +2,13 @@ class_name UmlClassNodeMembersContainer
 extends VBoxContainer
 
 
-signal signal_added(description: UmlClassNode.SignalDescription)
-signal variable_added(description: UmlClassNode.VariableDescription)
-signal method_added(description: UmlClassNode.MethodDescription)
+signal signal_added(description: UmlSignalDescription)
+signal variable_added(description: UmlVariableDescription)
+signal method_added(description: UmlMethodDescription)
 
-signal signal_removed(description: UmlClassNode.SignalDescription)
-signal variable_removed(description: UmlClassNode.VariableDescription)
-signal method_removed(description: UmlClassNode.MethodDescription)
+signal signal_removed(description: UmlSignalDescription)
+signal variable_removed(description: UmlVariableDescription)
+signal method_removed(description: UmlMethodDescription)
 
 
 @export var _tscn_signal: PackedScene

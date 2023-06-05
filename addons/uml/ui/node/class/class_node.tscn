@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/members/variable.tscn" id="2_msk3s"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/members/signal.tscn" id="2_xhax0"]
+[ext_resource type="PackedScene" uid="uid://p0k7htv2wpeb" path="res://addons/uml/ui/node/class/members/signal.tscn" id="2_xhax0"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/members/method.tscn" id="5_5r21a"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="5_lfrqw"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]

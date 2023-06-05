@@ -3,24 +3,27 @@ extends HBoxContainer
 
 
 @export var _default_name: String
-var _arguments: Array[UmlClassNode.ArgumentDescription]
+var _arguments: Array[UmlArgumentDescription]
 
-@onready var description: = UmlClassNode.SignalDescription.new(_default_name, _arguments)
+@onready var _description: = UmlSignalDescription.new(_default_name, _arguments)
 
 
+func get_description() -> UmlSignalDescription:
+	return _description
 
-func add_argument(argument: UmlClassNode.ArgumentDescription) -> void:
+
+func add_argument(argument: UmlArgumentDescription) -> void:
 	_arguments.append(argument)
 	_on_arguments_changed()
 
 
-func remove_argument(argument: UmlClassNode.ArgumentDescription) -> void:
+func remove_argument(argument: UmlArgumentDescription) -> void:
 	_arguments.remove_at(_arguments.find(argument))
 	_on_arguments_changed()
 
 
 func set_signal_name(new_text: String) -> void:
-	description.name = new_text
+	_description.name = new_text
 
 
 func _ready() -> void:
@@ -28,7 +31,7 @@ func _ready() -> void:
 
 
 func _on_arguments_changed() -> void:
-	description.arguments = _arguments
+	_description.arguments = _arguments
 
 
 func _gui_input(event: InputEvent) -> void:

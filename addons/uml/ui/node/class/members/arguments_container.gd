@@ -6,8 +6,8 @@ extends HBoxContainer
 @export var _tscn_chlid_divider: PackedScene
 
 
-signal argument_added(description: UmlClassNode.ArgumentDescription)
-signal argument_removed(description: UmlClassNode.ArgumentDescription)
+signal argument_added(description: UmlArgumentDescription)
+signal argument_removed(description: )
 
 
 func add_argument() -> void:

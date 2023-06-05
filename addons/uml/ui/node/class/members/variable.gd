@@ -2,15 +2,15 @@ class_name UmlClassNodeVariable
 extends HBoxContainer
 
 
-@export var _default_access_modifier: UmlClassNode.AccessModifier
+@export var _default_access_modifier: Uml.ClassMemberAccessModifier
 @export var _default_name: String
 @export var _default_type: String
 
-@onready var description: = UmlClassNode.VariableDescription.new(_default_access_modifier,
+@onready var description: = UmlVariableDescription.new(_default_access_modifier,
 		_default_name, _default_type)
 
 
-func set_access_modifier(modifier: UmlClassNode.AccessModifier) -> void:
+func set_access_modifier(modifier: Uml.ClassMemberAccessModifier) -> void:
 	description.access_modifier = modifier
 
 

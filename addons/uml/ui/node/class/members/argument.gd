@@ -6,7 +6,7 @@ extends HBoxContainer
 @export var _default_type: String
 
 
-@onready var description: = UmlClassNode.ArgumentDescription.new(_default_name,
+@onready var description: = UmlArgumentDescription.new(_default_name,
 		_default_type)
 @onready var name_edit: = $Name
 
