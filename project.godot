@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 
 ClassIconsProvider="*res://addons/uml/autoload/class_icons_provider.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/quick_plugin_manager/plugin.cfg", "res://addons/panku_console/plugin.cfg")
+
 [input]
 
 1={
