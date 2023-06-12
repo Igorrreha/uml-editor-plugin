@@ -6,20 +6,24 @@ extends HBoxContainer
 @export var _default_name: String
 @export var _default_type: String
 
-@onready var description: = UmlVariableDescription.new(_default_access_modifier,
+@onready var _description: = UmlVariableDescription.new(_default_access_modifier,
 		_default_name, _default_type)
 
 
+func get_description() -> UmlVariableDescription:
+	return _description
+
+
 func set_access_modifier(modifier: Uml.ClassMemberAccessModifier) -> void:
-	description.access_modifier = modifier
+	_description.access_modifier = modifier
 
 
 func set_variable_name(new_text: String) -> void:
-	description.name = new_text
+	_description.name = new_text
 
 
 func set_variable_type(new_text: String) -> void:
-	description.type = new_text
+	_description.type = new_text
 
 
 func _ready() -> void:

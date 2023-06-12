@@ -7,8 +7,12 @@ extends HBoxContainer
 @export var _default_type: String
 var _arguments: Array[UmlArgumentDescription]
 
-@onready var description: = UmlMethodDescription.new(_default_access_modifier,
+@onready var _description: = UmlMethodDescription.new(_default_access_modifier,
 		_default_name, _default_type, _arguments)
+
+
+func get_description() -> UmlMethodDescription:
+	return _description
 
 
 func add_argument(argument: UmlArgumentDescription) -> void:
@@ -22,15 +26,15 @@ func remove_argument(argument: UmlArgumentDescription) -> void:
 
 
 func set_access_modifier(modifier: Uml.ClassMemberAccessModifier) -> void:
-	description.access_modifier = modifier
+	_description.access_modifier = modifier
 
 
 func set_method_name(new_text: String) -> void:
-	description.name = new_text
+	_description.name = new_text
 
 
 func set_return_type(new_text: String) -> void:
-	description.return_type = new_text
+	_description.return_type = new_text
 
 
 func _ready() -> void:
@@ -40,7 +44,7 @@ func _ready() -> void:
 
 
 func _on_arguments_changed() -> void:
-	description.arguments = _arguments
+	_description.arguments = _arguments
 
 
 func _gui_input(event: InputEvent) -> void:

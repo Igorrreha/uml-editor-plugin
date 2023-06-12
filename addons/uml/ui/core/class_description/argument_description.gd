@@ -2,8 +2,8 @@ class_name UmlArgumentDescription
 extends Resource
 
 
-@export var _node_class_name: String
-@export var _parent_class_name: String
+@export var name: String
+@export var type: String
 
 
 func _init(name: String, type: String) -> void:
