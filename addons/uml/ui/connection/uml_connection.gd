@@ -1,4 +1,5 @@
 class_name UmlConnection
+extends Resource
 
 enum Type {
 	ASSOCIATION,
