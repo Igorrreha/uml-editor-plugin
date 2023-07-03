@@ -1,4 +1,4 @@
-class_name UmlSolutionNodesConnection
+class_name UmlNodesConnection
 extends ReactiveResource
 
 

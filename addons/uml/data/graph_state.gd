@@ -3,4 +3,4 @@ extends ReactiveResource
 
 
 @export var nodes: Array[UmlSolutionNode]
-@export var connections: Array[UmlSolutionNodesConnection]
+@export var connections: Array[UmlNodesConnection]
