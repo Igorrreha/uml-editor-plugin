@@ -1,4 +1,4 @@
-class_name UmlSolutionClassArgument
+class_name UmlClassArgumentState
 extends ReactiveResource
 
 

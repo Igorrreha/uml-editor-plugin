@@ -1,4 +1,4 @@
-class_name UmlSolutionClassVariable
+class_name UmlClassVariableState
 extends ReactiveResource
 
 
