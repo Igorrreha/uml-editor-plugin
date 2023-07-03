@@ -13,6 +13,33 @@ var _methods: Array[UmlMethodDescription]
 	_signals, _variables, _methods)
 
 
+var _state: UmlClassState
+
+
+func setup(node_state: UmlNodeState) -> void:
+	super.setup(node_state)
+	
+	if _state != null:
+		_state.remove_callback("self_class_name", _on_state_self_class_name_changed)
+		_state.remove_callback("parent_class_name", _on_state_parent_class_name_changed)
+		_state.remove_callback("signals", _on_state_signals_changed)
+		_state.remove_callback("variables", _on_state_variables_changed)
+		_state.remove_callback("methods", _on_state_methods_changed)
+	
+	_state = node_state.content as UmlClassState
+	_state.bind("self_class_name", _on_state_self_class_name_changed)
+	_state.bind("parent_class_name", _on_state_parent_class_name_changed)
+	_state.bind("signals", _on_state_signals_changed)
+	_state.bind("variables", _on_state_variables_changed)
+	_state.bind("methods", _on_state_methods_changed)
+	
+	_on_state_self_class_name_changed()
+	_on_state_parent_class_name_changed()
+	_on_state_signals_changed()
+	_on_state_variables_changed()
+	_on_state_methods_changed()
+
+
 func add_signal(description: UmlSignalDescription) -> void:
 	_signals.append(description)
 
@@ -35,6 +62,26 @@ func add_method(description: UmlMethodDescription) -> void:
 
 func remove_method(description: UmlMethodDescription) -> void:
 	_methods.remove_at(_methods.find(description))
+
+
+func _on_state_self_class_name_changed() -> void:
+	pass
+
+
+func _on_state_parent_class_name_changed() -> void:
+	pass
+
+
+func _on_state_signals_changed() -> void:
+	pass
+
+
+func _on_state_variables_changed() -> void:
+	pass
+
+
+func _on_state_methods_changed() -> void:
+	pass
 
 
 func _gui_input(event: InputEvent) -> void:
