@@ -1,13 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://bku15xxmcg4f3"]
+[gd_scene load_steps=14 format=3 uid="uid://bx4f1jcmbf7ho"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/members/members_container.gd" id="2_gmavf"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/members/variable.tscn" id="2_msk3s"]
-[ext_resource type="PackedScene" uid="uid://p0k7htv2wpeb" path="res://addons/uml/ui/node/class/members/signal.tscn" id="2_xhax0"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/members/method.tscn" id="5_5r21a"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/members_container.gd" id="3_wb64y"]
+[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/signal.tscn" id="4_2311r"]
+[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/variable.tscn" id="5_6ihah"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="5_lfrqw"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="6_mwrgt"]
+[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/method.tscn" id="6_tuuxa"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/members_container.gd" id="7_88k84"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/title_editor.tscn" id="9_4syso"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_icon_drawer.gd" id="9_yon8a"]
 
@@ -58,10 +59,10 @@ script = ExtResource("1_h1hxj")
 [node name="Members" type="VBoxContainer" parent="." node_paths=PackedStringArray("_signals_container", "_variables_container", "_methods_container", "_add_signal_button", "_add_variable_button", "_add_method_button")]
 layout_mode = 2
 theme_override_constants/separation = 0
-script = ExtResource("2_gmavf")
-_tscn_signal = ExtResource("2_xhax0")
-_tscn_variable = ExtResource("2_msk3s")
-_tscn_method = ExtResource("5_5r21a")
+script = ExtResource("3_wb64y")
+_tscn_signal = ExtResource("4_2311r")
+_tscn_variable = ExtResource("5_6ihah")
+_tscn_method = ExtResource("6_tuuxa")
 _signals_container = NodePath("Signals")
 _variables_container = NodePath("Variables")
 _methods_container = NodePath("Methods")
@@ -71,6 +72,7 @@ _add_method_button = NodePath("Methods/Add")
 
 [node name="Signals" type="VBoxContainer" parent="Members"]
 layout_mode = 2
+script = ExtResource("7_88k84")
 
 [node name="ParentIgnore" type="Node" parent="Members/Signals"]
 

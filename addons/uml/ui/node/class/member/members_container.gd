@@ -1,4 +1,4 @@
-class_name UmlClassNodeMembersContainer
+class_name UmlClassNodeMembersContainerOld
 extends VBoxContainer
 
 

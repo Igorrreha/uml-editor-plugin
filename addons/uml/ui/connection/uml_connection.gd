@@ -25,9 +25,11 @@ enum LineType {
 	DASHED,
 }
 
+
 var node_a: UmlNode
 var node_b: UmlNode
 var type: UmlConnection.Type
+
 
 func _init(node_a: UmlNode, node_b: UmlNode, connection_type: UmlConnection.Type):
 	self.node_a = node_a

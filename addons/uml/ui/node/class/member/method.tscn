@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3]
 
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/members/method.gd" id="1_jxca1"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/method.gd" id="1_jxca1"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="2_il8qb"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/access_modifier.tscn" id="2_wdh5d"]
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/members/arguments_container.gd" id="3_8awni"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/members/argument.tscn" id="4_sr53c"]
-[ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/members/arguments_divider.tscn" id="5_tpsh7"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/arguments_container.gd" id="3_8awni"]
+[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/argument.tscn" id="4_sr53c"]
+[ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/member/arguments_divider.tscn" id="5_tpsh7"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="6_xwuyt"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_rq4u3"]

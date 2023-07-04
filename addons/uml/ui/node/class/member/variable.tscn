@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/members/variable.gd" id="1_4xlro"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/variable.gd" id="1_4xlro"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/access_modifier.tscn" id="1_tx16y"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="2_5k2ag"]
 
