@@ -1,5 +1,5 @@
 class_name UmlClassNodeMethod
-extends HBoxContainer
+extends UmlClassNodeMember
 
 
 @export var _default_access_modifier: Uml.ClassMemberAccessModifier

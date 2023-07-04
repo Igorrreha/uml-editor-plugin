@@ -1,42 +1,42 @@
-class_name UmlClassNodeSignalsContainer
+class_name UmlClassNodeVariablesContainer
 extends UmlClassNodeMembersContainer
 
 
 func setup(content: UmlClassState) -> void:
 	content.setup_bindings(self, "_state", [
 		ReactiveResource.Binding
-			.new("signals", _on_state_signals_updated, _update_state_signals)
+			.new("variables", _on_state_variables_updated, _update_state_variables)
 	])
 
 
 func add_empty_signal() -> void:
-	var new_member = UmlClassSignalState.new()
+	var new_member = UmlClassVariableState.new()
 	_add_member(new_member)
-	_update_state_signals()
+	_update_state_variables()
 
 
 func remove_node(node: UmlClassNodeSignal) -> void:
-	_state.signals.erase(node.state)
+	_state.variables.erase(node.state)
 	_remove_member(node)
-	_update_state_signals()
+	_update_state_variables()
 
 
 func _on_member_asked_to_be_removed(node: UmlClassNodeMember) -> void:
 	remove_node(node)
 
 
-func _on_state_signals_updated() -> void:
-	var members_to_remove = _get_children_states().filter(func(state: UmlClassSignalState):
-		return not _state.signals.has(state))
+func _on_state_variables_updated() -> void:
+	var members_to_remove = _get_children_states().filter(func(state: UmlClassVariableState):
+		return not _state.variables.has(state))
 	_remove_members(members_to_remove)
 	
 	var children_states = _get_children_states()
-	var members_to_add = _state.signals.filter(func(state: UmlClassSignalState):
+	var members_to_add = _state.variables.filter(func(state: UmlClassVariableState):
 		return not children_states.has(state))
 	_add_members(members_to_add)
 
 
-func _get_children_states() -> Array[UmlClassSignalState]:
+func _get_children_states() -> Array[UmlClassVariableState]:
 	return (get_children()
 		.filter(func(child):
 			return child is UmlClassNodeSignal)
@@ -44,5 +44,5 @@ func _get_children_states() -> Array[UmlClassSignalState]:
 			return child.state))
 
 
-func _update_state_signals() -> void:
-	_state.set_value("signals", _state.signals, _update_state_signals)
+func _update_state_variables() -> void:
+	_state.set_value("variables", _state.variables, _update_state_variables)

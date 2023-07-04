@@ -1,14 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://bx4f1jcmbf7ho"]
+[gd_scene load_steps=15 format=3 uid="uid://bx4f1jcmbf7ho"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/members_container.gd" id="3_wb64y"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/signal.tscn" id="4_2311r"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/variable.tscn" id="5_6ihah"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/variables_container.gd" id="5_huvxh"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="5_lfrqw"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="6_mwrgt"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/methods_container.gd" id="6_qulfk"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/method.tscn" id="6_tuuxa"]
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/members_container.gd" id="7_88k84"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/signals_container.gd" id="7_3xd1l"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/title_editor.tscn" id="9_4syso"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_icon_drawer.gd" id="9_yon8a"]
 
@@ -56,23 +57,15 @@ slot/2/right_icon = null
 slot/2/draw_stylebox = true
 script = ExtResource("1_h1hxj")
 
-[node name="Members" type="VBoxContainer" parent="." node_paths=PackedStringArray("_signals_container", "_variables_container", "_methods_container", "_add_signal_button", "_add_variable_button", "_add_method_button")]
+[node name="Members" type="VBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 0
-script = ExtResource("3_wb64y")
-_tscn_signal = ExtResource("4_2311r")
-_tscn_variable = ExtResource("5_6ihah")
-_tscn_method = ExtResource("6_tuuxa")
-_signals_container = NodePath("Signals")
-_variables_container = NodePath("Variables")
-_methods_container = NodePath("Methods")
-_add_signal_button = NodePath("Signals/Add")
-_add_variable_button = NodePath("Variables/Add")
-_add_method_button = NodePath("Methods/Add")
 
-[node name="Signals" type="VBoxContainer" parent="Members"]
+[node name="Signals" type="VBoxContainer" parent="Members" node_paths=PackedStringArray("_add_member_button")]
 layout_mode = 2
-script = ExtResource("7_88k84")
+script = ExtResource("7_3xd1l")
+_tscn_member = ExtResource("4_2311r")
+_add_member_button = NodePath("Add")
 
 [node name="ParentIgnore" type="Node" parent="Members/Signals"]
 
@@ -92,8 +85,11 @@ text = "+"
 layout_mode = 2
 theme = ExtResource("6_mwrgt")
 
-[node name="Variables" type="VBoxContainer" parent="Members"]
+[node name="Variables" type="VBoxContainer" parent="Members" node_paths=PackedStringArray("_add_member_button")]
 layout_mode = 2
+script = ExtResource("5_huvxh")
+_tscn_member = ExtResource("5_6ihah")
+_add_member_button = NodePath("Add")
 
 [node name="ParentIgnore" type="Node" parent="Members/Variables"]
 
@@ -113,8 +109,11 @@ text = "+"
 layout_mode = 2
 theme = ExtResource("6_mwrgt")
 
-[node name="Methods" type="VBoxContainer" parent="Members"]
+[node name="Methods" type="VBoxContainer" parent="Members" node_paths=PackedStringArray("_add_member_button")]
 layout_mode = 2
+script = ExtResource("6_qulfk")
+_tscn_member = ExtResource("6_tuuxa")
+_add_member_button = NodePath("Add")
 
 [node name="ParentIgnore" type="Node" parent="Members/Methods"]
 
@@ -170,17 +169,11 @@ _class_node_members_container = NodePath("../Members")
 [connection signal="draw" from="." to="ParentClassNodeIconDrawer" method="queue_redraw"]
 [connection signal="gui_input" from="." to="TitleEditor" method="on_target_node_gui_input"]
 [connection signal="gui_input" from="." to="PopupMenu" method="on_class_node_gui_input"]
-[connection signal="method_added" from="Members" to="." method="add_method"]
-[connection signal="method_removed" from="Members" to="." method="remove_method"]
-[connection signal="signal_added" from="Members" to="." method="add_signal"]
-[connection signal="signal_removed" from="Members" to="." method="remove_signal"]
-[connection signal="variable_added" from="Members" to="." method="add_variable"]
-[connection signal="variable_removed" from="Members" to="." method="remove_variable"]
-[connection signal="shortcut_handled" from="Members/Signals/ParentIgnore/AddShortcutHandler" to="Members" method="add_signal"]
+[connection signal="shortcut_handled" from="Members/Signals/ParentIgnore/AddShortcutHandler" to="Members/Signals" method="add_empty_signal"]
 [connection signal="button_down" from="Members/Signals/Add" to="Members" method="add_signal"]
-[connection signal="shortcut_handled" from="Members/Variables/ParentIgnore/AddShortcutHandler2" to="Members" method="add_variable"]
+[connection signal="shortcut_handled" from="Members/Variables/ParentIgnore/AddShortcutHandler2" to="Members/Variables" method="add_empty_variable"]
 [connection signal="button_down" from="Members/Variables/Add" to="Members" method="add_variable"]
-[connection signal="shortcut_handled" from="Members/Methods/ParentIgnore/AddShortcutHandler3" to="Members" method="add_method"]
+[connection signal="shortcut_handled" from="Members/Methods/ParentIgnore/AddShortcutHandler3" to="Members/Methods" method="add_empty_method"]
 [connection signal="button_down" from="Members/Methods/Add" to="Members" method="add_method"]
 [connection signal="class_name_edit_text_changed" from="TitleEditor" to="ClassNodeIconDrawer" method="update_icon"]
 [connection signal="opened" from="TitleEditor" to="ClassNodeIconDrawer" method="draw_outside"]

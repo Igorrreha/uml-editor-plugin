@@ -1,13 +1,11 @@
 class_name UmlClassNodeSignal
-extends HBoxContainer
+extends UmlClassNodeMember
 
 
 @export var _default_name: String
 var _arguments: Array[UmlArgumentDescription]
 
 @onready var _description: = UmlSignalDescription.new(_default_name, _arguments)
-
-var state: UmlClassSignalState
 
 
 func get_description() -> UmlSignalDescription:

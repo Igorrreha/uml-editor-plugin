@@ -12,34 +12,53 @@ func setup(content: UmlClassState) -> void:
 	pass
 
 
-func add_member() -> void:
-	var new_member = _tscn_member.instantiate()
-	add_child(new_member)
-	_on_member_added(new_member)
-
-
 func _ready() -> void:
 	_update_add_member_button_visibility()
 
 
-func _on_member_added(node: Node) -> void:
-	if not node != _add_member_button:
-		node.tree_exited.connect(_on_member_removed.bind(node))
-		_update_add_member_button_visibility()
+func _add_members(states: Array[ReactiveResource]) -> void:
+	for state in states:
+		_add_member(state, true)
+	
+	_on_membership_updated()
+
+
+func _add_member(state: ReactiveResource, silent: bool = false) -> void:
+	var new_member = _tscn_member.instantiate() as UmlClassNodeMember
+	add_child(new_member)
+	new_member.asked_to_be_removed.connect(_on_member_asked_to_be_removed.bind(new_member))
+	new_member.setup(state)
+	
+	if not silent:
 		_on_membership_updated()
 
 
-func _on_member_removed(node: Node) -> void:
-	if node != _add_member_button:
-		node.tree_exited.disconnect(_on_member_removed)
-		_update_add_member_button_visibility()
+func _on_member_asked_to_be_removed(node: UmlClassNodeMember) -> void:
+	pass
+
+
+func _remove_members(states: Array[ReactiveResource]) -> void:
+	var children_to_remove = get_children().filter(func(child):
+		return child is UmlClassNodeMember and states.has(child.state))
+	
+	for child in children_to_remove:
+		_remove_member(child, true)
+	
+	_on_membership_updated()
+
+
+func _remove_member(child: UmlClassNodeMember, silent = false) -> void:
+	child.asked_to_be_removed.disconnect(_on_member_asked_to_be_removed)
+	remove_child(child)
+	
+	if not silent:
 		_on_membership_updated()
 
 
 func _on_membership_updated() -> void:
-	pass
+	_update_add_member_button_visibility()
 
 
 func _update_add_member_button_visibility() -> void:
-	_add_member_button.visible = not get_children().any(func(child: Node):
-		return child != _add_member_button)
+	_add_member_button.visible = not get_children().any(func(child):
+		return child is UmlClassNodeMember)

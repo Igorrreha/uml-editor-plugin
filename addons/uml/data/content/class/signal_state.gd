@@ -6,6 +6,7 @@ extends ReactiveResource
 @export var arguments: Array[UmlClassArgumentState]
 
 
-func _init(name: String, arguments: Array[UmlClassArgumentState]) -> void:
+func _init(name: String = "signal_name",
+		arguments: Array[UmlClassArgumentState] = []) -> void:
 	self.name = name
 	self.arguments = arguments
