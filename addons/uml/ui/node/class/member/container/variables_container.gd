@@ -9,13 +9,13 @@ func setup(content: UmlClassState) -> void:
 	])
 
 
-func add_empty_signal() -> void:
+func add_empty_variable() -> void:
 	var new_member = UmlClassVariableState.new()
 	_add_member(new_member)
 	_update_state_variables()
 
 
-func remove_node(node: UmlClassNodeSignal) -> void:
+func remove_node(node: UmlClassNodeVariable) -> void:
 	_state.variables.erase(node.state)
 	_remove_member(node)
 	_update_state_variables()
@@ -39,8 +39,8 @@ func _on_state_variables_updated() -> void:
 func _get_children_states() -> Array[UmlClassVariableState]:
 	return (get_children()
 		.filter(func(child):
-			return child is UmlClassNodeSignal)
-		.map(func(child: UmlClassNodeSignal):
+			return child is UmlClassNodeVariable)
+		.map(func(child: UmlClassNodeVariable):
 			return child.state))
 
 

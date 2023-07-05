@@ -9,13 +9,13 @@ func setup(content: UmlClassState) -> void:
 	])
 
 
-func add_empty_signal() -> void:
+func add_empty_method() -> void:
 	var new_member = UmlClassMethodState.new()
 	_add_member(new_member)
 	_update_state_methods()
 
 
-func remove_node(node: UmlClassNodeSignal) -> void:
+func remove_node(node: UmlClassNodeMethod) -> void:
 	_state.methods.erase(node.state)
 	_remove_member(node)
 	_update_state_methods()
@@ -39,8 +39,8 @@ func _on_state_methods_updated() -> void:
 func _get_children_states() -> Array[UmlClassMethodState]:
 	return (get_children()
 		.filter(func(child):
-			return child is UmlClassNodeSignal)
-		.map(func(child: UmlClassNodeSignal):
+			return child is UmlClassNodeMethod)
+		.map(func(child: UmlClassNodeMethod):
 			return child.state))
 
 
