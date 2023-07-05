@@ -10,10 +10,10 @@ extends UmlNodeContent
 @export var methods: Array[UmlClassMethodState]
 
 
-func _init(self_class_name: String, parent_class_name: String, 
-		signals: Array[UmlClassSignalState],
-		variables: Array[UmlClassVariableState],
-		methods: Array[UmlClassMethodState]) -> void:
+func _init(self_class_name: String = "NewClass", parent_class_name: String = "Object", 
+		signals: Array[UmlClassSignalState] = [],
+		variables: Array[UmlClassVariableState] = [],
+		methods: Array[UmlClassMethodState] = []) -> void:
 	self.self_class_name = self_class_name
 	self.parent_class_name = parent_class_name
 	

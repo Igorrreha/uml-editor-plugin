@@ -37,11 +37,13 @@ func _on_state_methods_updated() -> void:
 
 
 func _get_children_states() -> Array[UmlClassMethodState]:
-	return (get_children()
+	var states: Array[UmlClassMethodState]
+	states.assign((get_children()
 		.filter(func(child):
 			return child is UmlClassNodeMethod)
 		.map(func(child: UmlClassNodeMethod):
-			return child.state))
+			return child.state)))
+	return states
 
 
 func _update_state_methods() -> void:

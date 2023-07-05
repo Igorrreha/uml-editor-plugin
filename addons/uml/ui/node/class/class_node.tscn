@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://bx4f1jcmbf7ho"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/signal.tscn" id="4_2311r"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/variable.tscn" id="5_6ihah"]
+[ext_resource type="PackedScene" uid="uid://bs6l28s5ogs8s" path="res://addons/uml/ui/node/class/member/signal.tscn" id="4_2311r"]
+[ext_resource type="PackedScene" uid="uid://dobmisgd4xjs3" path="res://addons/uml/ui/node/class/member/variable.tscn" id="5_6ihah"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/variables_container.gd" id="5_huvxh"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="5_lfrqw"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]

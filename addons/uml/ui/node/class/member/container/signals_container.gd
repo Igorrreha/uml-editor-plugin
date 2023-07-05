@@ -37,11 +37,13 @@ func _on_state_signals_updated() -> void:
 
 
 func _get_children_states() -> Array[UmlClassSignalState]:
-	return (get_children()
+	var states: Array[UmlClassSignalState]
+	states.assign((get_children()
 		.filter(func(child):
 			return child is UmlClassNodeSignal)
 		.map(func(child: UmlClassNodeSignal):
-			return child.state))
+			return child.state)))
+	return states
 
 
 func _update_state_signals() -> void:

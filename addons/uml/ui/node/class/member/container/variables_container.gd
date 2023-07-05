@@ -37,11 +37,13 @@ func _on_state_variables_updated() -> void:
 
 
 func _get_children_states() -> Array[UmlClassVariableState]:
-	return (get_children()
+	var states: Array[UmlClassVariableState]
+	states.assign((get_children()
 		.filter(func(child):
 			return child is UmlClassNodeVariable)
 		.map(func(child: UmlClassNodeVariable):
-			return child.state))
+			return child.state)))
+	return states
 
 
 func _update_state_variables() -> void:

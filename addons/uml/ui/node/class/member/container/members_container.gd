@@ -16,7 +16,7 @@ func _ready() -> void:
 	_update_add_member_button_visibility()
 
 
-func _add_members(states: Array[ReactiveResource]) -> void:
+func _add_members(states: Array) -> void:
 	for state in states:
 		_add_member(state, true)
 	
@@ -37,7 +37,7 @@ func _on_member_asked_to_be_removed(node: UmlClassNodeMember) -> void:
 	pass
 
 
-func _remove_members(states: Array[ReactiveResource]) -> void:
+func _remove_members(states: Array) -> void:
 	var children_to_remove = get_children().filter(func(child):
 		return child is UmlClassNodeMember and states.has(child.state))
 	
