@@ -2,34 +2,45 @@ class_name UmlClassNodeVariable
 extends UmlClassNodeMember
 
 
-@export var _default_access_modifier: Uml.ClassMemberAccessModifier
-@export var _default_name: String
-@export var _default_type: String
-
-@onready var _description: = UmlVariableDescription.new(_default_access_modifier,
-		_default_name, _default_type)
+@export var _access_modifier_field: OptionButton
+@export var _name_field: LineEdit
+@export var _type_field: LineEdit
 
 
-func get_description() -> UmlVariableDescription:
-	return _description
+func setup(state: UmlClassVariableState) -> void:
+	super.setup(state)
+	state.setup_bindings(self, "state", [
+		ReactiveResource.Binding
+			.new("access_modifier", _on_state_access_modifier_updated, set_access_modifier),
+		ReactiveResource.Binding
+			.new("name", _on_state_name_updated, set_variable_name),
+		ReactiveResource.Binding
+			.new("type", _on_state_type_updated, set_variable_type),
+	])
+
+
+func _on_state_access_modifier_updated() -> void:
+	_access_modifier_field.select((state as UmlClassVariableState).access_modifier)
+
+
+func _on_state_name_updated() -> void:
+	_name_field.text = (state as UmlClassVariableState).name
+
+
+func _on_state_type_updated() -> void:
+	_type_field.text = (state as UmlClassVariableState).type
 
 
 func set_access_modifier(modifier: Uml.ClassMemberAccessModifier) -> void:
-	_description.access_modifier = modifier
+	state.set_value("access_modifier", modifier, set_access_modifier)
 
 
 func set_variable_name(new_text: String) -> void:
-	_description.name = new_text
+	state.set_value("name", new_text, set_variable_name)
 
 
 func set_variable_type(new_text: String) -> void:
-	_description.type = new_text
-
-
-func _ready() -> void:
-	$AccessModifier.selected = _default_access_modifier
-	$Name.text = _default_name
-	$Type.text = _default_type
+	state.set_value("type", new_text, set_variable_type)
 
 
 func _gui_input(event: InputEvent) -> void:
