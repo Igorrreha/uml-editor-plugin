@@ -151,9 +151,9 @@ _target = NodePath("..")
 _target_unit_position = Vector2(1, 1)
 _icon_scale = Vector2(0.6, 0.6)
 
-[node name="PopupMenu" type="PopupMenu" parent="." node_paths=PackedStringArray("_class_node_members_container")]
+[node name="PopupMenu" type="PopupMenu" parent="."]
 handle_input_locally = false
-size = Vector2i(125, 100)
+size = Vector2i(134, 120)
 item_count = 5
 item_0/text = "Add signal"
 item_0/id = 2
@@ -167,12 +167,11 @@ item_3/separator = true
 item_4/text = "Remove node"
 item_4/id = 4
 script = ExtResource("5_u62dd")
-_class_node_members_container = NodePath("../Members")
 
 [connection signal="draw" from="." to="ClassNodeIconDrawer" method="queue_redraw"]
 [connection signal="draw" from="." to="ParentClassNodeIconDrawer" method="queue_redraw"]
 [connection signal="gui_input" from="." to="TitleEditor" method="on_target_node_gui_input"]
-[connection signal="gui_input" from="." to="PopupMenu" method="on_class_node_gui_input"]
+[connection signal="rmb_clicked" from="." to="PopupMenu" method="open"]
 [connection signal="shortcut_handled" from="Members/Signals/ParentIgnore/AddShortcutHandler" to="Members/Signals" method="add_empty_signal"]
 [connection signal="button_down" from="Members/Signals/Add" to="Members/Signals" method="add_empty_signal"]
 [connection signal="shortcut_handled" from="Members/Variables/ParentIgnore/AddShortcutHandler2" to="Members/Variables" method="add_empty_variable"]
@@ -184,5 +183,8 @@ _class_node_members_container = NodePath("../Members")
 [connection signal="opened" from="TitleEditor" to="ParentClassNodeIconDrawer" method="draw_outside"]
 [connection signal="parent_class_name_edit_text_changed" from="TitleEditor" to="ParentClassNodeIconDrawer" method="update_icon"]
 [connection signal="icon_updated" from="ParentClassNodeIconDrawer" to="ClassNodeIconDrawer" method="set_fallback_icon"]
+[connection signal="add_method_pressed" from="PopupMenu" to="Members/Methods" method="add_empty_method"]
+[connection signal="add_signal_pressed" from="PopupMenu" to="Members/Signals" method="add_empty_signal"]
+[connection signal="add_variable_pressed" from="PopupMenu" to="Members/Variables" method="add_empty_variable"]
 [connection signal="id_pressed" from="PopupMenu" to="PopupMenu" method="_on_id_pressed"]
 [connection signal="remove_node_item_pressed" from="PopupMenu" to="." method="queue_free"]

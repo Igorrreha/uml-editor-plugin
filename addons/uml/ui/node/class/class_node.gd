@@ -2,6 +2,9 @@ class_name UmlClassNode
 extends UmlNode
 
 
+signal rmb_clicked(global_position: Vector2)
+
+
 @export var _title_editor: UmlClassNodeTitleEditor
 
 @export var _signals_container: UmlClassNodeSignalsContainer
@@ -21,5 +24,8 @@ func setup(node_state: UmlNodeState) -> void:
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
+	if (event is InputEventMouseButton
+	and event.button_index == MOUSE_BUTTON_RIGHT
+	and event.is_pressed()):
 		get_viewport().set_input_as_handled()
+		rmb_clicked.emit(event.global_position)

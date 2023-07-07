@@ -2,16 +2,9 @@ extends PopupMenu
 
 
 signal remove_node_item_pressed
-
-
-@export var _class_node_members_container: UmlClassNodeMembersContainer
-
-
-func on_class_node_gui_input(event: InputEvent) -> void:
-	if (event is InputEventMouseButton
-	and event.button_index == MOUSE_BUTTON_RIGHT
-	and event.is_pressed()):
-		open(event.global_position)
+signal add_signal_pressed
+signal add_variable_pressed
+signal add_method_pressed
 
 
 func open(popup_position: Vector2) -> void:
@@ -21,10 +14,10 @@ func open(popup_position: Vector2) -> void:
 func _on_id_pressed(id: int) -> void:
 	match id:
 		0:
-			_class_node_members_container.add_variable()
+			add_variable_pressed.emit()
 		1:
-			_class_node_members_container.add_method()
+			add_method_pressed.emit()
 		2:
-			_class_node_members_container.add_signal()
+			add_signal_pressed.emit()
 		4:
 			remove_node_item_pressed.emit()
