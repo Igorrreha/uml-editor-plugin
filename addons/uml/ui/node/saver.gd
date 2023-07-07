@@ -16,10 +16,9 @@ func save() -> void:
 		if not node is UmlClassNode:
 			continue
 		
-		var save = UmlClassNodeDescription.new(node)
 		var save_path = graph_directory.path_join(node.name) + ".tres"
 		
-		var error = ResourceSaver.save(save, save_path)
+		var error = ResourceSaver.save(node.state, save_path)
 		if error:
 			printerr("Node %s saving failed! Error code: %s" % [node, error])
 		
