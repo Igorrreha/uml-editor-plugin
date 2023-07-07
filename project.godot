@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="Uml Editor Plugin"
+config/tags=PackedStringArray("plugin")
 run/main_scene="res://addons/uml/ui/uml_graph/uml_graph.tscn"
-config/features=PackedStringArray("4.0", "Forward Plus")
+config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.png"
 
 [autoload]
