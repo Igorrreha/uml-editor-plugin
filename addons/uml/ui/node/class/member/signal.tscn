@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bs6l28s5ogs8s"]
+[gd_scene load_steps=11 format=3 uid="uid://dab6d0wcfbss6"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/member/signal.gd" id="1_lljek"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="3_1huy4"]
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/arguments_container.gd" id="3_jacx8"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="3_v725n"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/argument.tscn" id="4_wm4qk"]
-[ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/member/arguments_divider.tscn" id="5_own27"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/arguments_container.gd" id="3_yn2x7"]
+[ext_resource type="PackedScene" uid="uid://dutf6ufglpmn8" path="res://addons/uml/ui/node/class/member/argument.tscn" id="4_wm4qk"]
+[ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/member/container/arguments_divider.tscn" id="5_ibkqm"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_rq4u3"]
 device = -1
@@ -23,11 +23,12 @@ keycode = 4194312
 [sub_resource type="Shortcut" id="Shortcut_otmy4"]
 events = [SubResource("InputEventKey_2ru06")]
 
-[node name="Signal" type="HBoxContainer"]
+[node name="Signal" type="HBoxContainer" node_paths=PackedStringArray("_name_node", "_arguments_container")]
 mouse_filter = 0
 theme = ExtResource("3_1huy4")
 script = ExtResource("1_lljek")
-_default_name = "signal"
+_name_node = NodePath("Name")
+_arguments_container = NodePath("Arguments")
 
 [node name="Name" type="LineEdit" parent="."]
 layout_mode = 2
@@ -43,9 +44,9 @@ text = "("
 
 [node name="Arguments" type="HBoxContainer" parent="."]
 layout_mode = 2
-script = ExtResource("3_jacx8")
-_tscn_argument = ExtResource("4_wm4qk")
-_tscn_chlid_divider = ExtResource("5_own27")
+script = ExtResource("3_yn2x7")
+_chlid_divider_tscn = ExtResource("5_ibkqm")
+_state_item_tscn = ExtResource("4_wm4qk")
 
 [node name="AddArgumentShortcutHandler" parent="." node_paths=PackedStringArray("shortcut_context") instance=ExtResource("3_v725n")]
 layout_mode = 2
@@ -67,8 +68,6 @@ item_0/text = "Remove"
 item_0/id = 0
 
 [connection signal="text_changed" from="Name" to="." method="set_signal_name"]
-[connection signal="argument_added" from="Arguments" to="." method="add_argument"]
-[connection signal="argument_removed" from="Arguments" to="." method="remove_argument"]
-[connection signal="shortcut_handled" from="AddArgumentShortcutHandler" to="Arguments" method="add_argument"]
-[connection signal="shortcut_handled" from="DestroyShortcutHandler" to="." method="queue_free"]
-[connection signal="index_pressed" from="PopupMenu" to="." method="queue_free" unbinds=1]
+[connection signal="shortcut_handled" from="AddArgumentShortcutHandler" to="Arguments" method="add_new_argument"]
+[connection signal="shortcut_handled" from="DestroyShortcutHandler" to="." method="request_removing"]
+[connection signal="index_pressed" from="PopupMenu" to="." method="request_removing" unbinds=1]

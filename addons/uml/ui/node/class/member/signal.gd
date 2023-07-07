@@ -1,37 +1,40 @@
 class_name UmlClassNodeSignal
-extends UmlClassNodeMember
+extends HBoxContainer
 
 
-@export var _default_name: String
-var _arguments: Array[UmlArgumentDescription]
-
-@onready var _description: = UmlSignalDescription.new(_default_name, _arguments)
+signal removing_requested
 
 
-func get_description() -> UmlSignalDescription:
-	return _description
+@export var _name_node: LineEdit
+@export var _arguments_container: UmlClassNodeArgumentsContainer
 
 
-func add_argument(argument: UmlArgumentDescription) -> void:
-	_arguments.append(argument)
-	_on_arguments_changed()
+var state: UmlClassSignalState
 
 
-func remove_argument(argument: UmlArgumentDescription) -> void:
-	_arguments.remove_at(_arguments.find(argument))
-	_on_arguments_changed()
+func setup(state: UmlClassSignalState) -> void:
+	state.setup_bindings(self, "state", [
+		ReactiveResource.Binding
+			.new("name", _on_state_name_updated, set_signal_name),
+	])
+	
+	_arguments_container.setup(state.get_handler("arguments"))
 
 
 func set_signal_name(new_text: String) -> void:
-	_description.name = new_text
+	state.set_value("name", new_text, set_signal_name)
 
 
-func _ready() -> void:
-	$Name.text = _default_name
+func request_removing() -> void:
+	removing_requested.emit()
 
 
-func _on_arguments_changed() -> void:
-	_description.arguments = _arguments
+func _exit_tree() -> void:
+	state.remove_callback("name", _on_state_name_updated)
+
+
+func _on_state_name_updated() -> void:
+	_name_node.text = (state as UmlClassSignalState).name
 
 
 func _gui_input(event: InputEvent) -> void:

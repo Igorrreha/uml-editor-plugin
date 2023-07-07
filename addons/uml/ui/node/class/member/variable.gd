@@ -1,14 +1,19 @@
 class_name UmlClassNodeVariable
-extends UmlClassNodeMember
+extends HBoxContainer
 
 
-@export var _access_modifier_field: OptionButton
-@export var _name_field: LineEdit
-@export var _type_field: LineEdit
+signal removing_requested
+
+
+@export var _access_modifier_node: OptionButton
+@export var _name_node: LineEdit
+@export var _type_node: LineEdit
+
+
+var state: UmlClassVariableState
 
 
 func setup(state: UmlClassVariableState) -> void:
-	super.setup(state)
 	state.setup_bindings(self, "state", [
 		ReactiveResource.Binding
 			.new("access_modifier", _on_state_access_modifier_updated, set_access_modifier),
@@ -17,18 +22,6 @@ func setup(state: UmlClassVariableState) -> void:
 		ReactiveResource.Binding
 			.new("type", _on_state_type_updated, set_variable_type),
 	])
-
-
-func _on_state_access_modifier_updated() -> void:
-	_access_modifier_field.select((state as UmlClassVariableState).access_modifier)
-
-
-func _on_state_name_updated() -> void:
-	_name_field.text = (state as UmlClassVariableState).name
-
-
-func _on_state_type_updated() -> void:
-	_type_field.text = (state as UmlClassVariableState).type
 
 
 func set_access_modifier(modifier: Uml.ClassMemberAccessModifier) -> void:
@@ -41,6 +34,28 @@ func set_variable_name(new_text: String) -> void:
 
 func set_variable_type(new_text: String) -> void:
 	state.set_value("type", new_text, set_variable_type)
+
+
+func request_removing() -> void:
+	removing_requested.emit()
+
+
+func _exit_tree() -> void:
+	state.remove_callback("access_modifier", _on_state_access_modifier_updated)
+	state.remove_callback("name", _on_state_name_updated)
+	state.remove_callback("type", _on_state_type_updated)
+
+
+func _on_state_access_modifier_updated() -> void:
+	_access_modifier_node.select((state as UmlClassVariableState).access_modifier)
+
+
+func _on_state_name_updated() -> void:
+	_name_node.text = (state as UmlClassVariableState).name
+
+
+func _on_state_type_updated() -> void:
+	_type_node.text = (state as UmlClassVariableState).type
 
 
 func _gui_input(event: InputEvent) -> void:

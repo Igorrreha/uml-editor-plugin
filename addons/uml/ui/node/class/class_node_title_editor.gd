@@ -1,7 +1,8 @@
+class_name UmlClassNodeTitleEditor
 extends Node
 
 
-signal opened()
+signal opened
 signal class_name_edit_text_changed(text: String)
 signal parent_class_name_edit_text_changed(text: String)
 
@@ -13,6 +14,51 @@ signal parent_class_name_edit_text_changed(text: String)
 @export var _parent_class_name_edit: LineEdit
 
 var _is_parent_class_locked: bool
+
+
+var _self_class_name_handler: ReactiveResource.PropertyHandler
+var _parent_class_name_handler: ReactiveResource.PropertyHandler
+
+
+func setup(self_class_name_handler: ReactiveResource.PropertyHandler,
+		parent_class_name_handler: ReactiveResource.PropertyHandler) -> void:
+	_remove_reactive_callbacks()
+	
+	_self_class_name_handler = self_class_name_handler
+	_parent_class_name_handler = parent_class_name_handler
+	
+	_self_class_name_handler.bind(_on_self_class_name_update_handled,
+		_on_class_name_edit_text_changed)
+	_parent_class_name_handler.bind(_on_parent_class_name_update_handled,
+		_on_parent_class_name_edit_text_changed)
+	
+	_on_self_class_name_update_handled()
+	_on_parent_class_name_update_handled()
+
+
+func _exit_tree() -> void:
+	_remove_reactive_callbacks()
+
+
+func _remove_reactive_callbacks() -> void:
+	if _self_class_name_handler:
+		_self_class_name_handler.remove_callback(_on_self_class_name_update_handled)
+	if _parent_class_name_handler:
+		_parent_class_name_handler.remove_callback(_on_parent_class_name_update_handled)
+
+
+func _on_self_class_name_update_handled() -> void:
+	var actual_value = _self_class_name_handler.get_value()
+	_class_name_edit.text = actual_value
+	_target_node.title = actual_value
+	class_name_edit_text_changed.emit(actual_value)
+
+
+func _on_parent_class_name_update_handled() -> void:
+	var actual_value = _parent_class_name_handler.get_value()
+	_parent_class_name_edit.text = actual_value
+	_update_parent_class_state()
+	parent_class_name_edit_text_changed.emit(actual_value)
 
 
 func on_target_node_gui_input(event: InputEvent) -> void:
@@ -48,10 +94,12 @@ func _on_editing_popup_hide() -> void:
 func _on_class_name_edit_text_changed(text: String) -> void:
 	class_name_edit_text_changed.emit(text)
 	_update_parent_class_state()
+	_self_class_name_handler.set_value(text, _on_class_name_edit_text_changed)
 
 
 func _on_parent_class_name_edit_text_changed(text: String) -> void:
 	parent_class_name_edit_text_changed.emit(text)
+	_parent_class_name_handler.set_value(text, _on_parent_class_name_edit_text_changed)
 
 
 func _set_parent_class_lock(locked: bool) -> void:

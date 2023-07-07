@@ -1,50 +1,64 @@
 class_name UmlClassNodeMethod
-extends UmlClassNodeMember
+extends HBoxContainer
 
 
-@export var _default_access_modifier: Uml.ClassMemberAccessModifier
-@export var _default_name: String
-@export var _default_type: String
-var _arguments: Array[UmlArgumentDescription]
-
-@onready var _description: = UmlMethodDescription.new(_default_access_modifier,
-		_default_name, _default_type, _arguments)
+signal removing_requested
 
 
-func get_description() -> UmlMethodDescription:
-	return _description
+@export var _access_modifier_node: OptionButton
+@export var _name_node: LineEdit
+@export var _type_node: LineEdit
+@export var _arguments_container: UmlClassNodeArgumentsContainer
 
 
-func add_argument(argument: UmlArgumentDescription) -> void:
-	_arguments.append(argument)
-	_on_arguments_changed()
+var state: UmlClassMethodState
 
 
-func remove_argument(argument: UmlArgumentDescription) -> void:
-	_arguments.remove_at(_arguments.find(argument))
-	_on_arguments_changed()
+func setup(state: UmlClassMethodState) -> void:
+	state.setup_bindings(self, "state", [
+		ReactiveResource.Binding
+			.new("access_modifier", _on_state_access_modifier_updated, set_method_access_modifier),
+		ReactiveResource.Binding
+			.new("name", _on_state_name_updated, set_method_name),
+		ReactiveResource.Binding
+			.new("return_type", _on_state_return_type_updated, set_method_return_type),
+	])
+	
+	_arguments_container.setup(state.get_handler("arguments"))
 
 
-func set_access_modifier(modifier: Uml.ClassMemberAccessModifier) -> void:
-	_description.access_modifier = modifier
+func request_removing() -> void:
+	removing_requested.emit()
 
 
-func set_method_name(new_text: String) -> void:
-	_description.name = new_text
+func set_method_access_modifier(new_value: Uml.ClassMemberAccessModifier) -> void:
+	state.set_value("access_modifier", new_value, set_method_access_modifier)
 
 
-func set_return_type(new_text: String) -> void:
-	_description.return_type = new_text
+func set_method_name(new_value: String) -> void:
+	state.set_value("name", new_value, set_method_name)
 
 
-func _ready() -> void:
-	$AccessModifier.selected = _default_access_modifier
-	$Name.text = _default_name
-	$Type.text = _default_type
+func set_method_return_type(new_value: String) -> void:
+	state.set_value("return_type", new_value, set_method_return_type)
 
 
-func _on_arguments_changed() -> void:
-	_description.arguments = _arguments
+func _exit_tree() -> void:
+	state.remove_callback("access_modifier", _on_state_access_modifier_updated)
+	state.remove_callback("name", _on_state_name_updated)
+	state.remove_callback("return_type", _on_state_return_type_updated)
+
+
+func _on_state_access_modifier_updated() -> void:
+	_access_modifier_node.select(state.access_modifier)
+
+
+func _on_state_name_updated() -> void:
+	_name_node.text = state.name
+
+
+func _on_state_return_type_updated() -> void:
+	_type_node.text = state.return_type
 
 
 func _gui_input(event: InputEvent) -> void:

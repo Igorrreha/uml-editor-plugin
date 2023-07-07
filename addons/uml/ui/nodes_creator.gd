@@ -12,6 +12,6 @@ func create_class_node(position: Vector2) -> void:
 		- _graph.global_position)
 	
 	var node_state = UmlNodeState.new(node_position, UmlClassState.new())
-	new_node.setup(node_state)
-	
 	_graph.add_child(new_node)
+	
+	new_node.setup(node_state)

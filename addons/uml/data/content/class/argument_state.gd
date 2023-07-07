@@ -6,6 +6,6 @@ extends ReactiveResource
 @export var type: String
 
 
-func _init(name: String, type: String) -> void:
+func _init(name: String = "arg", type: String = "Variant") -> void:
 	self.name = name
 	self.type = type

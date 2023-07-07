@@ -2,26 +2,47 @@ class_name UmlClassNodeArgument
 extends HBoxContainer
 
 
-@export var _default_name: String
-@export var _default_type: String
+signal removing_requested
 
 
-@onready var description: = UmlArgumentDescription.new(_default_name,
-		_default_type)
-@onready var name_edit: = $Name
+@export var _name_node: LineEdit
+@export var _type_node: LineEdit
+
+var state: UmlClassArgumentState
+
+
+func setup(state: UmlClassArgumentState) -> void:
+	state.setup_bindings(self, "state", [
+		ReactiveResource.Binding
+			.new("name", _on_state_name_updated, set_argument_name),
+		ReactiveResource.Binding
+			.new("type", _on_state_type_updated, set_argument_type),
+	])
+
+
+func request_removing() -> void:
+	removing_requested.emit()
 
 
 func set_argument_name(new_text: String) -> void:
-	description.name = new_text
+	state.set_value("name", new_text, set_argument_name)
 
 
 func set_argument_type(new_text: String) -> void:
-	description.type = new_text
+	state.set_value("type", new_text, set_argument_type)
 
 
-func _ready() -> void:
-	name_edit.text = _default_name
-	$Type.text = _default_type
+func _exit_tree() -> void:
+	state.remove_callback("name", _on_state_name_updated)
+	state.remove_callback("type", _on_state_type_updated)
+
+
+func _on_state_name_updated() -> void:
+	_name_node.text = state.name
+
+
+func _on_state_type_updated() -> void:
+	_type_node.text = state.type
 
 
 func _gui_input(event: InputEvent) -> void:

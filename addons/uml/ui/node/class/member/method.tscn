@@ -1,11 +1,11 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=12 format=3 uid="uid://cr0l3rnrt2yo2"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/member/method.gd" id="1_jxca1"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="2_il8qb"]
 [ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/access_modifier.tscn" id="2_wdh5d"]
-[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/arguments_container.gd" id="3_8awni"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/argument.tscn" id="4_sr53c"]
-[ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/member/arguments_divider.tscn" id="5_tpsh7"]
+[ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/arguments_container.gd" id="3_8awni"]
+[ext_resource type="PackedScene" uid="uid://dutf6ufglpmn8" path="res://addons/uml/ui/node/class/member/argument.tscn" id="4_sr53c"]
+[ext_resource type="PackedScene" uid="uid://t64mtumr2an" path="res://addons/uml/ui/node/class/member/container/arguments_divider.tscn" id="5_tpsh7"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="6_xwuyt"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_rq4u3"]
@@ -24,12 +24,14 @@ keycode = 4194312
 [sub_resource type="Shortcut" id="Shortcut_otmy4"]
 events = [SubResource("InputEventKey_2ru06")]
 
-[node name="Method" type="HBoxContainer"]
+[node name="Method" type="HBoxContainer" node_paths=PackedStringArray("_access_modifier_node", "_name_node", "_type_node", "_arguments_container")]
 mouse_filter = 0
 theme = ExtResource("2_il8qb")
 script = ExtResource("1_jxca1")
-_default_name = "method"
-_default_type = "void"
+_access_modifier_node = NodePath("AccessModifier")
+_name_node = NodePath("Name")
+_type_node = NodePath("Type")
+_arguments_container = NodePath("Arguments")
 
 [node name="AccessModifier" parent="." instance=ExtResource("2_wdh5d")]
 layout_mode = 2
@@ -50,8 +52,8 @@ text = "("
 [node name="Arguments" type="HBoxContainer" parent="."]
 layout_mode = 2
 script = ExtResource("3_8awni")
-_tscn_argument = ExtResource("4_sr53c")
-_tscn_chlid_divider = ExtResource("5_tpsh7")
+_chlid_divider_tscn = ExtResource("5_tpsh7")
+_state_item_tscn = ExtResource("4_sr53c")
 
 [node name="AddArgumentShortcutHandler" parent="." node_paths=PackedStringArray("shortcut_context") instance=ExtResource("6_xwuyt")]
 layout_mode = 2
@@ -85,11 +87,9 @@ item_count = 1
 item_0/text = "Remove"
 item_0/id = 0
 
-[connection signal="modifier_selected" from="AccessModifier" to="." method="set_access_modifier"]
+[connection signal="modifier_selected" from="AccessModifier" to="." method="set_method_access_modifier"]
 [connection signal="text_changed" from="Name" to="." method="set_method_name"]
-[connection signal="argument_added" from="Arguments" to="." method="add_argument"]
-[connection signal="argument_removed" from="Arguments" to="." method="remove_argument"]
-[connection signal="shortcut_handled" from="AddArgumentShortcutHandler" to="Arguments" method="add_argument"]
-[connection signal="shortcut_handled" from="DestroyShortcutHandler" to="." method="queue_free"]
-[connection signal="text_changed" from="Type" to="." method="set_return_type"]
-[connection signal="index_pressed" from="PopupMenu" to="." method="queue_free" unbinds=1]
+[connection signal="shortcut_handled" from="AddArgumentShortcutHandler" to="Arguments" method="add_new_argument"]
+[connection signal="shortcut_handled" from="DestroyShortcutHandler" to="." method="request_removing"]
+[connection signal="text_changed" from="Type" to="." method="set_method_return_type"]
+[connection signal="index_pressed" from="PopupMenu" to="." method="request_removing" unbinds=1]

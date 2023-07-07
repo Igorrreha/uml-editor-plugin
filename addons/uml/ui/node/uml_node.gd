@@ -14,6 +14,10 @@ func setup(state: UmlNodeState) -> void:
 	])
 
 
+func _exit_tree() -> void:
+	_node_state.remove_callback("position", _on_state_position_changed)
+
+
 func _ready() -> void:
 	position_offset_changed.connect(_on_position_offset_changed)
 

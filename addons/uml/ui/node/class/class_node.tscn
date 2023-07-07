@@ -1,16 +1,16 @@
 [gd_scene load_steps=15 format=3 uid="uid://bx4f1jcmbf7ho"]
 
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_node.gd" id="1_h1hxj"]
-[ext_resource type="PackedScene" uid="uid://bs6l28s5ogs8s" path="res://addons/uml/ui/node/class/member/signal.tscn" id="4_2311r"]
+[ext_resource type="PackedScene" uid="uid://dab6d0wcfbss6" path="res://addons/uml/ui/node/class/member/signal.tscn" id="4_2311r"]
 [ext_resource type="PackedScene" uid="uid://dobmisgd4xjs3" path="res://addons/uml/ui/node/class/member/variable.tscn" id="5_6ihah"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/variables_container.gd" id="5_huvxh"]
 [ext_resource type="PackedScene" uid="uid://b2q00jwnkp0aa" path="res://addons/uml/ui/shortcut_handler.tscn" id="5_lfrqw"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/popup_menu.gd" id="5_u62dd"]
 [ext_resource type="Theme" uid="uid://56an2mymekb2" path="res://addons/uml/ui/uml_editor_theme.tres" id="6_mwrgt"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/methods_container.gd" id="6_qulfk"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/member/method.tscn" id="6_tuuxa"]
+[ext_resource type="PackedScene" uid="uid://cr0l3rnrt2yo2" path="res://addons/uml/ui/node/class/member/method.tscn" id="6_tuuxa"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/member/container/signals_container.gd" id="7_3xd1l"]
-[ext_resource type="PackedScene" path="res://addons/uml/ui/node/class/title_editor.tscn" id="9_4syso"]
+[ext_resource type="PackedScene" uid="uid://dlmbbeuby0cx3" path="res://addons/uml/ui/node/class/title_editor.tscn" id="9_4syso"]
 [ext_resource type="Script" path="res://addons/uml/ui/node/class/class_icon_drawer.gd" id="9_yon8a"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_r4g78"]
@@ -21,7 +21,7 @@ keycode = 4194309
 [sub_resource type="Shortcut" id="Shortcut_opmbj"]
 events = [SubResource("InputEventKey_r4g78")]
 
-[node name="ClassNode" type="GraphNode" node_paths=PackedStringArray("_signals_container", "_variables_container", "_methods_container")]
+[node name="ClassNode" type="GraphNode" node_paths=PackedStringArray("_title_editor", "_signals_container", "_variables_container", "_methods_container")]
 offset_right = 203.0
 offset_bottom = 136.0
 mouse_force_pass_scroll_events = false
@@ -56,6 +56,7 @@ slot/2/right_color = Color(1, 1, 1, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
 script = ExtResource("1_h1hxj")
+_title_editor = NodePath("TitleEditor")
 _signals_container = NodePath("Members/Signals")
 _variables_container = NodePath("Members/Variables")
 _methods_container = NodePath("Members/Methods")
@@ -67,8 +68,8 @@ theme_override_constants/separation = 0
 [node name="Signals" type="VBoxContainer" parent="Members" node_paths=PackedStringArray("_add_member_button")]
 layout_mode = 2
 script = ExtResource("7_3xd1l")
-_tscn_member = ExtResource("4_2311r")
 _add_member_button = NodePath("Add")
+_state_item_tscn = ExtResource("4_2311r")
 
 [node name="ParentIgnore" type="Node" parent="Members/Signals"]
 
@@ -91,8 +92,8 @@ theme = ExtResource("6_mwrgt")
 [node name="Variables" type="VBoxContainer" parent="Members" node_paths=PackedStringArray("_add_member_button")]
 layout_mode = 2
 script = ExtResource("5_huvxh")
-_tscn_member = ExtResource("5_6ihah")
 _add_member_button = NodePath("Add")
+_state_item_tscn = ExtResource("5_6ihah")
 
 [node name="ParentIgnore" type="Node" parent="Members/Variables"]
 
@@ -115,8 +116,8 @@ theme = ExtResource("6_mwrgt")
 [node name="Methods" type="VBoxContainer" parent="Members" node_paths=PackedStringArray("_add_member_button")]
 layout_mode = 2
 script = ExtResource("6_qulfk")
-_tscn_member = ExtResource("6_tuuxa")
 _add_member_button = NodePath("Add")
+_state_item_tscn = ExtResource("6_tuuxa")
 
 [node name="ParentIgnore" type="Node" parent="Members/Methods"]
 
